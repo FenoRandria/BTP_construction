@@ -3,8 +3,7 @@
     Created on : May 2, 2024, 1:32:04 PM
     Author     : fenor
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,9 +36,9 @@
                             }
                     </style>
                     <h3 class="title">Log In</h3>
-                    <p id="error"> </p>
+                    <p id="error" style="color: red"> </p>
                     <!-- Mot de passe -->
-                    <label for="telephone">Numero Telephone* :  <p id="errorTelephone" style="color: red"></p></label>
+                    <label for="telephone">Numero Telephone* :  <p id="errorNumero" style="color: red"></p></label>
                     <input type="tel" id="telephone" name="telephone" value="">
                     <br>
                     <!-- Bouton de soumission -->

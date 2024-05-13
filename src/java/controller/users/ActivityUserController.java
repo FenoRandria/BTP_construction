@@ -6,12 +6,28 @@
 package controller.users;
 
 import config.OutilsFormat;
+import connection.ConnectionDB;
+import dao.GenericDao;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Devis;
+import model.TypeFinition;
+import model.TypeMaison;
 import model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -22,57 +38,154 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ActivityUserController {
     @RequestMapping(value = "/devis")
     public String listDevisClient(Model model, HttpServletRequest req) {
-//        HttpSession session = req.getSession();
-//        User user = (User)session.getAttribute("user");
-//        String role = "user";
-//        if(user == null) return "redirect:/admin";
-//        if(OutilsFormat.profileValid(user,role )) 
-//        {
+        HttpSession session = req.getSession();
+        User user = (User)session.getAttribute("user");
+        if(user == null) return "redirect:/user";
+        if(OutilsFormat.profileValid(user)) 
+        {
             return "page/Client/devis-liste";
-//        } else {
-//            return "redirect:/user";
-//        }
+        } else {
+            return "redirect:/user";
+        }
     }
     
     @RequestMapping(value = "/devis-form")
     public String formulaireDevisClient(Model model, HttpServletRequest req) {
-//        HttpSession session = req.getSession();
-//        User user = (User)session.getAttribute("user");
-//        String role = "user";
-//        if(user == null) return "redirect:/admin";
-//        if(OutilsFormat.profileValid(user,role )) 
-//        {
-            return "page/Client/devis-formulaire";
-//        } else {
-//            return "redirect:/user";
-//        }
+        HttpSession session = req.getSession();
+        User user = (User)session.getAttribute("user");
+        String role = "user";
+        if(user == null) return "redirect:/admin";
+        if(OutilsFormat.profileValid(user)) 
+        {
+            try {
+                GenericDao gen = new GenericDao();
+                Connection con = new ConnectionDB().getConnection("postgres");
+                List<TypeFinition> typeFinitions = (List<TypeFinition>) gen.find(new TypeFinition(), con);
+                List<TypeMaison> TypeMaisons = (List<TypeMaison>) gen.find(new TypeMaison(), con);
+                model.addAttribute("typeFinitions", typeFinitions);             
+                model.addAttribute("typeMaisons", TypeMaisons);
+                return "page/Client/devis-formulaire";
+            }catch(Exception e) {
+                 return "redirect:/user?error="+e.getMessage();
+            }
+            
+            
+        } else {
+            return "redirect:/user";
+        }
+    }
+    
+    @RequestMapping(value = "/devis-insert",method = RequestMethod.POST)
+    @ResponseBody
+    public void insertDevisClient(Model model, HttpServletRequest req,HttpServletResponse resp) {
+        HttpSession session = req.getSession();
+        User user = (User)session.getAttribute("user");
+        PrintWriter out = null;
+        List<String> messages = new ArrayList<String>();
+        
+        try{
+            out = resp.getWriter();
+        }catch(Exception e){
+            OutilsFormat.addMessage(messages, false, "error", e.getMessage());
+            return;
+        }
+        
+        if(user==null){
+           OutilsFormat.addMessage(messages, false, "error", "Veuillez-reconnectez svp!");
+           return;
+        }
+        
+        int idTypeMaison = (req.getParameter("idTypeMaison") != null && !req.getParameter("idTypeMaison").trim().isEmpty()) ? Integer.parseInt(req.getParameter("idTypeMaison")) : 0;
+        int idFinition = (req.getParameter("idFinition") != null && !req.getParameter("idFinition").trim().isEmpty()) ? Integer.parseInt(req.getParameter("idFinition")) : 0;
+        String dateDebut = (req.getParameter("dateDebut") != null && !req.getParameter("dateDebut").trim().isEmpty()) ? req.getParameter("dateDebut") : null;
+        String descriptions = (req.getParameter("descriptions") != null && !req.getParameter("descriptions").trim().isEmpty()) ? req.getParameter("descriptions") : null;
+        int idUser = user.getId()>0 ? user.getId() : 0;
+        
+        System.out.println("tonga : ---- "+dateDebut+"/"+idTypeMaison+"/"+idFinition+"/"+idUser);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date dateDebuttype = null;
+        
+        boolean success = true;
+        if (idTypeMaison == 0) {
+            OutilsFormat.addMessage(messages, false, "errorIdTypeMaison", "Type Maison Invalide!");
+            success = false;
+        }
+        if (idFinition == 0) {
+            OutilsFormat.addMessage(messages, false, "errorIdFinition", "Type Finition Invalide!");
+            success = false;
+        }
+
+        if (dateDebut == null) {
+            OutilsFormat.addMessage(messages, false, "errorDateDebut", "Date Invalide!");
+            success = false;
+        } else {
+            try {
+                java.util.Date date = sdf.parse(dateDebut);
+                dateDebuttype = new java.sql.Date(date.getTime());
+            } catch (ParseException e) {
+                OutilsFormat.addMessage(messages, false, "errorDateDebut", "Date Invalide!");
+            }
+        }
+
+        if(idUser == 0)
+        {
+            OutilsFormat.addMessage(messages, false, "error", "Vous etes non authentifié");
+            success = false;
+        }
+        
+        if(success){
+            
+            Connection con = null;
+            try{  
+                Devis devis = new Devis(idUser, descriptions, idFinition, idTypeMaison,dateDebuttype);
+                con = new ConnectionDB().getConnection("postgres");
+                GenericDao gen = new GenericDao();
+                gen.save(devis, con);
+                devis = (Devis) gen.find(devis, con).get(0);
+                if(devis.getId()>0)
+                {
+                    OutilsFormat.addMessage(messages, true,null, "/devis");
+                }
+            }catch(Exception e){
+                OutilsFormat.addMessage(messages, false, "error", e.getMessage());
+            } finally  {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    OutilsFormat.addMessage(messages, false, "error", ex.getMessage());
+                }
+            }
+        }
+        out.print(String.join("+", messages));
     }
     
     @RequestMapping(value = "/devis-details")
     public String detailsDevisClient(Model model, HttpServletRequest req) {
-//        HttpSession session = req.getSession();
-//        User user = (User)session.getAttribute("user");
-//        String role = "user";
-//        if(user == null) return "redirect:/user";
-//        if(OutilsFormat.profileValid(user,role ))
-//        {
+        HttpSession session = req.getSession();
+        User user = (User)session.getAttribute("user");
+        String role = "user";
+        if(user == null) return "redirect:/user";
+        if(OutilsFormat.profileValid(user))
+        {
             return "page/Client/devis-details";
-//        } else {
-//            return "redirect:/user";
-//        }
+        } else {
+            return "redirect:/user";
+        }
     }
     
     @RequestMapping(value = "/devis-paiement")
     public String paiementDevisClient(Model model, HttpServletRequest req) {
-//        HttpSession session = req.getSession();
-//        User user = (User)session.getAttribute("user");
-//        String role = "user";
-//        if(user == null) return "redirect:/user";
-//        if(OutilsFormat.profileValid(user,role ))
-//        {
+        HttpSession session = req.getSession();
+        User user = (User)session.getAttribute("user");
+        String role = "user";
+        if(user == null) return "redirect:/user";
+        if(OutilsFormat.profileValid(user))
+        {
             return "page/Client/devis-paiement";
-//        } else {
-//            return "redirect:/user";
-//        }
+        } else {
+            return "redirect:/user";
+        }
     }
 }
+    

@@ -34,6 +34,9 @@ public class User implements Serializable{
     @Colonne(colonneName ="mail")
     String mail;
     
+    @Colonne(colonneName ="numero")
+    String numero;
+    
     @Colonne(colonneName ="mdp")
     String mdp;
     
@@ -70,7 +73,36 @@ public class User implements Serializable{
     public void setMail(String mail) {
         this.mail = mail;
     }
+    
+    public String getNumero() {
+        return numero;
+    }
 
+    public void setNumero(String numero) {
+        System.out.println("number length: ..... "+numero.length());
+        if (!this.isValidPhoneNumber(numero)) {
+            throw new IllegalArgumentException("Le numéro de téléphone doit être de 10 chiffres et commencer par 033, 034, 038, 032 ou 020");
+        }
+        this.numero = numero;
+    }
+    public boolean isValidPhoneNumber(String phoneNumber) {
+    if (phoneNumber.length() != 10) {
+        return false;
+    }
+    if (!phoneNumber.startsWith("033") && !phoneNumber.startsWith("034") &&
+            !phoneNumber.startsWith("032") && !phoneNumber.startsWith("038") &&
+            !phoneNumber.startsWith("020")) {
+        return false;
+    }
+    for (int i = 3; i < phoneNumber.length(); i++) {
+        if (!Character.isDigit(phoneNumber.charAt(i))) {
+            return false;
+        }
+    }
+    return true;
+}
+
+    
     public String getMdp() {
         return mdp;
     }
@@ -128,6 +160,11 @@ public class User implements Serializable{
     public User(String mail) {
         this.setMail(mail);
     }
+    
+    public User(int telephone, String numero) {
+        this.setNumero(numero);
+    }
+    
     public User() {
     }
     
@@ -158,17 +195,6 @@ public class User implements Serializable{
                 errors.add("Utilisateur inconnu");
                 return errors;
             }
-            String query = "SELECT r.id , r.rolename " +
-                           "FROM users u " +
-                           "JOIN userroles ur ON u.id = ur.idUser " +
-                           "JOIN roles r ON ur.idRole = r.id " +
-                           "WHERE u.id = "+authenticatedUser.getId();
-            
-            System.out.println(query);
-            
-            authenticatedUser.setRoles((List<Role>)dao.executeQueryGeneral(new Role(),query, con));
-            System.out.println("aoanananannanna-------------------------------------- "+authenticatedUser.toString());
-            System.out.println("rolename: "+authenticatedUser.getRoles().get(0));
 
             return authenticatedUser;
     
@@ -181,4 +207,39 @@ public class User implements Serializable{
         }
     }
     
+     // authenticateUser par numero telephone
+    public Object authenticateUser(String numero, Connection con) throws Exception {
+        List<String> errors = new ArrayList<>();
+        User authenticatedUser = null;
+        boolean shouldCloseConnection = false;
+    
+        try {
+            if (con == null) {
+                con = new ConnectionDB().getConnection("postgres");
+                shouldCloseConnection = true;
+            }
+    
+            GenericDao dao = new GenericDao();
+            ArrayList<?> users = dao.find(new User(0,numero), con);
+            User u = (User) users.get(0);
+            System.out.print(u);
+            if (users != null &&  !users.isEmpty()) {
+                return (User) users.get(0);
+            } else {
+                dao.executeQueryGeneral(new User(), "insert into users (numero) values ('"+numero+"') returning *", con);
+                users = dao.find(new User(0,numero), con);
+                if (users != null && !users.isEmpty()) {
+                    return (User) users.get(0);
+                }
+                return errors;
+            }
+    
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (shouldCloseConnection && con != null) {
+                con.close();
+            }
+        }
+    }
 }

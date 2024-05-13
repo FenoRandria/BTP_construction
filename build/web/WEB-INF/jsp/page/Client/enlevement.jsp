@@ -1,5 +1,4 @@
 
-<%@page import="model.V_stationement"%>
 <%@page import="model.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>

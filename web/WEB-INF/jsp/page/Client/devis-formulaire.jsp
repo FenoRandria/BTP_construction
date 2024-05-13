@@ -4,6 +4,8 @@
     Author     : fenor
 --%>
 
+<%@page import="model.TypeMaison"%>
+<%@page import="model.TypeFinition"%>
 <%-- 
     Document   : stationnement
     Created on : May 9, 2024, 11:10:36 PM
@@ -18,8 +20,10 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <% 
-
-
+    User user = (User) session.getAttribute("user");
+    List<TypeFinition> typeFinitions = (List<TypeFinition>) request.getAttribute("typeFinitions");             
+    List<TypeMaison> typeMaisons = (List<TypeMaison>) request.getAttribute("typeMaisons");
+    
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +69,7 @@
                         <img src="${pageContext.request.contextPath}/assets/img/our.png" alt="profileImg">
                     </div>
                     <div class="name-job">
-                        <div class="profile_name"><% if(null!=null) out.print("Feno"); %></div>
+                        <div class="profile_name"><% if(user!=null) out.print(user.getNumero()); %></div>
                         <div class="job">Developper</div>
                     </div>
                         <i class='bx bx-log-out' onclick="Deconnect()" ></i>
@@ -122,8 +126,8 @@
                                     <img src="${pageContext.request.contextPath}/assets/img/our.png" alt="">
                                 </div>
                                 <div class="infoProfile">
-                                    <h3><% if(null!=null) out.print("Feno"); %></h3>
-                                    <p>4.674.00 Point</p>
+                                    <h3><% if(user!=null) out.print(user.getNumero()); %></h3>
+                                    <p>actif</p>
                                 </div>
                             </div>
                             <div class="logOut">
@@ -137,83 +141,60 @@
                         </div>
                     </nav>
                 </header>
-                <h3 class="title ">Stationnement 🅿</h3>
+                <h3 class="title ">Devis Construction</h3>
                 
                 <section class="fichier">
-                    <form id="stationForm">
-                        <h3>Choisir Place Voiture</h3>
+                    <form id="devisForm">
+                        <h3>Choisir Type Maison</h3>
                         <p class="errors" id="error" style="color:red;font-size: 1rem"></p>
                         <table>
-                                <p class="errors" id="errorIdPlace" style="color:red;font-size: 1rem"></p>
-                                <tr>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 1</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 2</h3>
-                                        <input width="50px" type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 3</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                </tr>
-
-                                 <tr>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 1</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 2</h3>
-                                        <input width="50px" type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 3</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 1</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 2</h3>
-                                        <input width="50px" type="radio" name="idPlace" value=""> 
-                                    </td>
-                                    <td>
-                                        <img width="100px" src="${pageContext.request.contextPath}/assets/img/sport1.jpeg" alt="">
-                                        <h3>Maison 3</h3>
-                                        <input type="radio" name="idPlace" value=""> 
-                                    </td>
-                                </tr>
-                                
+                                <p class="errors" id="errorIdTypeMaison" style="color:red;font-size: 1rem"></p>
+                                <% if(typeMaisons!=null) { %>
+                                    <tr>
+                                        <% for(int i = 0; i< typeMaisons.size()/2; i++) { %>
+                                            <% TypeMaison typeMaison = (TypeMaison) typeMaisons.get(i); %>
+                                            <td>
+                                                <img width="100px" src="${pageContext.request.contextPath}/assets/img/<%= typeMaison.getPhotos()%>" alt="">
+                                                <h3>Maison Type <%= typeMaison.getId()%></h3>
+                                                <input type="radio" name="idTypeMaison" value="<%= typeMaison.getId()%>">
+                                            </td>
+                                        <% } %>
+                                    </tr>
+                                    <tr>
+                                        <% for(int i = typeMaisons.size()/2; i< typeMaisons.size(); i++) { %>
+                                            <% TypeMaison typeMaison = (TypeMaison) typeMaisons.get(i); %>
+                                            <td>
+                                                <img width="100px" src="${pageContext.request.contextPath}/assets/img/<%= typeMaison.getPhotos()%>" alt="">
+                                                <h3>Maison Type <%= typeMaison.getId()%></h3>
+                                                <input type="radio" name="idTypeMaison" value="<%= typeMaison.getId()%>">
+                                            </td>
+                                        <% } %>
+                                    </tr>
+                                <% } %>
+                           
                         </table>
 
                         <h3>Type Finition</h3>
-                        <p class="errors" id="errorFinition" style="color:red;font-size: 1rem"></p>
-                        <select name="finition">
-                            <option></option>                            
-                            <option value="1">Standard</option>
-                            <option value="2">Prémium</option>
-                            <option value="3">V.I.P</option>
-                            <option value="4">Gold</option>
+                        <p class="errors" id="errorIdFinition" style="color:red;font-size: 1rem"></p>
+                        <select name="idFinition">
+                            <option></option>       
+                            <% if(typeFinitions!=null) { %>
+                                <% for(int i = 0; i< typeFinitions.size(); i++) { %>
+                                    <% TypeFinition typeFinition = (TypeFinition) typeFinitions.get(i); %>
+                                        <option value="<%= typeFinition.getId()%>"><%= typeFinition.getTypeFinition() %></option>
+                                <% } %>
+                            <% } %>
                         </select>
 
                         <h3>Date début projet : </h3>
                         <p class="errors" id="errorDateDebut" style="color:red;font-size: 1rem"></p>
                         <input type="date" name="dateDebut" id="dateDebut">
  
+                        <h3>Descriptions : </h3>
+                        <p class="errors" id="errorDescriptions" style="color:red;font-size: 1rem"></p>
+                        <textarea id="descriptions" name="descriptions" rows="10" cols="50" placeholder="Entrer votre description ic..."></textarea>
+
+                        descriptions
                         <input type="submit" value="Valider Place">
                     </form>
                     <style>
@@ -285,7 +266,7 @@
         }
 
         $(document).ready(function() {
-            $('#stationForm').submit(function(event) {
+            $('#devisForm').submit(function(event) {
                 event.preventDefault();
                 removeError();
                 let params = $('form').serialize().toString();
@@ -315,7 +296,7 @@
                 };
                 console.log(params);
                 
-                xmlhttp.open("POST", "prendre-place", true);
+                xmlhttp.open("POST", "devis-insert", true);
                 xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                 xmlhttp.send(params);
             });

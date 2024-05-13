@@ -24,7 +24,7 @@ public class ConnectionDB {
             }
             else if (typedata.compareToIgnoreCase("Postgres")==0){
             	Class.forName("org.postgresql.Driver");
-                con= DriverManager.getConnection("jdbc:postgresql://localhost:5432/parking","postgres", "feno12");
+                con= DriverManager.getConnection("jdbc:postgresql://localhost:5432/btp_construction","postgres", "feno12");
                 //System.out.println("cvsdc");
             }
 	}catch(ClassNotFoundException | SQLException e){ 

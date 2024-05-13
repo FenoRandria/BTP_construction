@@ -44,10 +44,10 @@
             <li>
                 <a href="devis-form">
                     <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="link_name">Cr�ation Devis</span>
+                    <span class="link_name">Crï¿½ation Devis</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="devis-form">Cr�ation Devis</a></li>
+                    <li><a class="link_name" href="devis-form">Crï¿½ation Devis</a></li>
                 </ul>
             </li>
             
@@ -132,7 +132,7 @@
 
                 <section class="save" style="overflow-y: scroll;">
                     <form action="insert-place" method="post" >
-                        <h3>Montant � payer : </h3>
+                        <h3>Montant ï¿½ payer : </h3>
                         <p class="errors" id="errorMontant" style="color:red;font-size: 1rem"></p>
                         <input type="number" name="montant" id="montant">
                         

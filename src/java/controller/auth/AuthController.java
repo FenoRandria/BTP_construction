@@ -78,11 +78,11 @@ public class AuthController {
                Object obj = user.authenticateUser(mail, mdp, con);
                System.out.println(obj);
                if (obj instanceof User) {
-                    HttpSession session = req.getSession();
-                    session.setAttribute("role", ((User) obj).getRoles());                 
+                    HttpSession session = req.getSession();            
                     session.setAttribute("user", (User) obj);
                     con.close();
-                    if(((User) obj).getRoles().get(0).getRolename().compareToIgnoreCase("admin")==0) {
+                    if(user.getMail()!="")
+                    {
                         OutilsFormat.addMessage(messages, true, "success", "/gestion-places");
                     } else {
                         OutilsFormat.addMessage(messages, false, "error", "vous n'avez pas d'accès");
@@ -108,16 +108,11 @@ public class AuthController {
         PrintWriter out = resp.getWriter();
         List<String> messages = new ArrayList<String>();
 
-        String mail = (req.getParameter("mail") != null && !req.getParameter("mail").trim().isEmpty()) ? req.getParameter("mail") : null;
-        String mdp = (req.getParameter("mdp") != null && !req.getParameter("mdp").trim().isEmpty()) ? req.getParameter("mdp") : null;
-    
+        String numero = (req.getParameter("telephone") != null && !req.getParameter("telephone").trim().isEmpty()) ? req.getParameter("telephone") : null;
+        System.out.println("numero:"+numero);
         boolean success = true;
-        if (mail == null || !OutilsFormat.isEmailValid(mail)) {
-            OutilsFormat.addMessage(messages, false, "errorMail", "Mail Invalide!");
-            success = false;
-        }
-        if (mdp == null) {
-            OutilsFormat.addMessage(messages, false, "errorMdp", "Mot de passe Invalide!");
+        if (numero == null) {
+            OutilsFormat.addMessage(messages, false, "errorNumero", "Numero Invalide!");
             success = false;
         }
         
@@ -126,19 +121,13 @@ public class AuthController {
            GenericDao gen = new GenericDao();
            try{
                Connection con = new ConnectionDB().getConnection("postgres");
-               System.out.println(con);
-               Object obj = user.authenticateUser(mail, mdp, con);
-               System.out.println(obj);
+               Object obj = user.authenticateUser(numero, con);
                if (obj instanceof User) {
-                    HttpSession session = req.getSession();
-                    session.setAttribute("role", ((User) obj).getRoles());                 
+                    HttpSession session = req.getSession();          
                     session.setAttribute("user", (User) obj);
                     con.close();
-                    if(((User) obj).getRoles().get(0).getRolename().compareToIgnoreCase("user")==0) {
-                        OutilsFormat.addMessage(messages, true, "success", "/places");
-                    } else {
-                        OutilsFormat.addMessage(messages, false, "error", "vous n'avez pas d'accès");
-                    }
+                    OutilsFormat.addMessage(messages, true, "success", "/devis");
+                    
                 } else { List<String> errs = (List<String>) obj;
                     OutilsFormat.addMessage(messages, false, "error", errs.get(0));
                     model.addAttribute("cause",obj);

@@ -63,6 +63,20 @@ public class OutilsFormat {
         return false;
     }
     
+        public static boolean profileValid(User user) 
+    {
+        if(user == null){
+            return false;
+        }
+         
+        if(user != null && user.getId() > 0) 
+        {   
+            System.out.println("user numero conected: "+user.getNumero()+"id user :"+user.getId());
+            return true;
+        }
+        return false;
+    }
+    
     public static void addMessage(List<String> messages, boolean success, String type, String message) {
     if (success) {
         messages.add("success:" + message);
