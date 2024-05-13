@@ -1,0 +1,460 @@
+$white: #ffffff;
+$vert: #c9cd16;
+$orange: #ffc887;
+$black: #0e0e0e;
+$red: #F36E50;
+
+$text-font: 'Urbanist';
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $text-font;
+    background: $black;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+#page {
+    width: 100%;
+    height: 100vh;
+    background: $black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+header {
+    width: 90%;
+    height: 80px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -35px;
+
+    .logo {
+        width: 130px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            margin: auto;
+        }
+    }
+
+    nav {
+        width: 90%;
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+
+        .menuNav {
+            width: 40%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+
+            ul {
+                width: 30%;
+                min-width: 530px;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                li {
+                    color: white;
+                    list-style: none;
+
+                    a {
+                        padding: 14px 35px;
+                        border-radius: 40px;
+                        font-weight: 500;
+                        color: white;
+                        font-size: 0.8rem;
+                        background: #ffffff11;
+                        transition: 0.1s ease-in-out;
+
+                        &:hover {
+                            background: #ffffff38;
+                        }
+                    }
+
+                    .actif {
+                        background: white;
+                        color: black;
+                    }
+                }
+
+
+            }
+        }
+
+        .recherche {
+            width: 20%;
+            height: 47px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid $white;
+            border-radius: 200px;
+
+            form {
+                width: 100%;
+                height: 47px;
+                margin: auto;
+                display: flex;
+                align-items: center;
+
+                input[type="text"] {
+                    width: 85%;
+                    height: 47px;
+                    border: none;
+                    background: none;
+                    color: white;
+                    font-family: $text-font;
+                    text-align: center;
+                }
+
+                input:focus {
+                    outline: none;
+                }
+
+                input::placeholder {
+                    font-family: $text-font;
+                    text-align: center;
+                }
+
+                button {
+                    width: 37px;
+                    height: 37px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: none;
+                    border: none;
+                    background: white;
+                    border-radius: 200px;
+                    overflow: hidden;
+                    cursor: pointer;
+
+                    img {
+                        width: 90%;
+                        height: 50%;
+                        object-fit: cover;
+                    }
+                }
+            }
+
+        }
+
+        .profilOUt {
+            width: 30%;
+            height: 47px;
+            display: flex;
+            align-items: center;
+
+            .profil {
+                width: 40%;
+                height: 47px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .imageProfile {
+                    width: 47px;
+                    height: 47px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 200px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .infoProfile {
+                    width: auto;
+                    height: 47px;
+                    color: $white;
+
+                    h3 {
+                        font-size: 1rem;
+                        margin: 3px 0px;
+                    }
+
+                    p {
+                        color: rgba(255, 255, 255, 0.500);
+                        font-size: 0.9rem;
+                        margin: 0;
+                    }
+                }
+            }
+
+            .logOut {
+                width: 30%;
+                height: 47px;
+                display: flex;
+                align-items: center;
+                background: $orange;
+                justify-content: space-evenly;
+                border-radius: 15px;
+
+                .text {
+                    width: 80%;
+                    height: 47px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                a {
+                    font-weight: 600;
+                    color: $black;
+                    font-size: 1rem;
+                }
+
+                .img {
+                    width: 28px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.title {
+    color: white;
+    text-align: center;
+    font-size: 4rem;
+}
+
+main {
+    h3 {
+        color: white;
+    }
+}
+
+.save {
+    width: 80%;
+    height: auto;
+    min-height: 200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+
+    form {
+        width: 40%;
+        min-width: 300px;
+        margin: auto;
+        color: $white;
+        font-family: 'Urbanist';
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+        /* Style de base pour les éléments de formulaire */
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="search"],
+        input[type="number"],
+        input[type="url"],
+        input[type="date"],
+        input[type="time"],
+        input[type="color"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #1c2830;
+            color: white;
+            font-family: 'poppins';
+            margin: auto;
+            box-sizing: border-box;
+
+            &::placeholder {
+                font-family: 'poppins';
+            }
+
+            &:focus {
+                outline: none;
+                border: 1px solid violet;
+            }
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            margin: 10px 0;
+            background-color: transparent;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 20px;
+                height: 20px;
+                background-color: rgb(255, 255, 255);
+                border-radius: 50%;
+                margin-top: -10px;
+                cursor: pointer;
+            }
+
+            &::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 2px;
+                background-color: white;
+                border-radius: 5px;
+            }
+
+            &:focus {
+                outline: none;
+
+            }
+        }
+
+        /* Style pour les cases à cocher et les boutons radio */
+        input[type="checkbox"],
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        /* Style pour les boutons */
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            :hover {
+                background-color: #546ca814;
+                border: 1px solid;
+            }
+        }
+
+        /* Style pour les boutons de réinitialisation */
+        input[type="reset"] {
+            background-color: #f44336;
+        }
+
+        /* Style lorsque le curseur passe sur un élément */
+        input:hover,
+        textarea:hover,
+        select:hover {
+            border-color: #888;
+        }
+
+        @media (max-width:1460px)
+        {
+            .drop-zone-section{
+                width: max-content;
+            }
+        }
+        
+        /* drag file */
+        .drop-zone-section{
+            color: #000000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-bottom: 25px;
+            width: 620px;
+            height: auto;
+            min-width: 620px;
+        }
+        .drop-zone-section input[type="file"]{
+            padding: 5px 35px 5px 10px; 
+            line-height: 2rem;
+            font-size: 14px;
+            border-radius: 25px;
+            border: 1px #000000 solid ;
+            transition: 0.3s ease-in-out; 
+            background: none;
+            display: block;        
+            color: #000;
+        }
+        .drop-zone-section input[type="file"]::file-selector-button{
+            margin-right: 8px;
+            border: none;
+            padding: 8px 12px;
+            color: #ffffff;
+            background: #000;
+            cursor: pointer;
+            border-radius: 25px;
+            content: "choose file";
+        }
+        .drop-zone-section .drop-container {
+            position: relative;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            margin-left: -10px;
+            margin-right: 50px;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            /* padding: 20px; */
+            border-radius: 10px;
+            border: 2px dashed #000000;
+            cursor: pointer;
+            transition: background 0.2s ease-in-out, border .2s ease-in-out;
+            background: linear-gradient(to top,#ffffffad,#eaeaea);
+        }
+        .drop-container:hover{
+            background: linear-gradient(to top,#ffffffad 20%,#eaeaea);
+        }
+        @media (max-width:1460px)
+        {
+            .drop-zone-section{
+                min-width: 200px;
+                display: flex;
+            }
+            .drop-zone-section input[type="file"]{
+                width: 50%;
+            }
+        }
+
+    }
+
+    div {
+        width: 30%;
+        height: 500px;
+    }
+}

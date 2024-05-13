@@ -1,0 +1,280 @@
+$white: #ffffff;
+$vert: #c9cd16;
+$orange: #ffc887;
+$black: #0e0e0e;
+$red: #F36E50;
+
+$text-font: 'Urbanist';
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $text-font;
+    background: $black;
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+}
+
+#page {
+    width: 100%;
+    height: 100vh;
+    background: $black;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    a {
+        text-decoration: none;
+    }
+}
+
+header {
+    width: 90%;
+    height: 80px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: -35px;
+
+    .logo {
+        width: 130px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            margin: auto;
+        }
+    }
+
+    nav {
+        width: 90%;
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+
+        .menuNav {
+            width: 40%;
+            height: 80px;
+            display: flex;
+            align-items: center;
+
+            ul {
+                width: 30%;
+                min-width: 530px;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                li {
+                    color: white;
+                    list-style: none;
+
+                    a {
+                        padding: 14px 35px;
+                        border-radius: 40px;
+                        font-weight: 500;
+                        color: white;
+                        font-size: 0.8rem;
+                        background: #ffffff11;
+                        transition: 0.1s ease-in-out;
+
+                        &:hover {
+                            background: #ffffff38;
+                        }
+                    }
+
+                    .actif {
+                        background: white;
+                        color: black;
+                    }
+                }
+
+
+            }
+        }
+
+        .recherche {
+            width: 20%;
+            height: 47px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid $white;
+            border-radius: 200px;
+
+            form {
+                width: 100%;
+                height: 47px;
+                margin: auto;
+                display: flex;
+                align-items: center;
+
+                input[type="text"] {
+                    width: 85%;
+                    height: 47px;
+                    border: none;
+                    background: none;
+                    color: white;
+                    font-family: $text-font;
+                    text-align: center;
+                }
+
+                input:focus {
+                    outline: none;
+                }
+
+                input::placeholder {
+                    font-family: $text-font;
+                    text-align: center;
+                }
+
+                button {
+                    width: 37px;
+                    height: 37px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: none;
+                    border: none;
+                    background: white;
+                    border-radius: 200px;
+                    overflow: hidden;
+                    cursor: pointer;
+
+                    img {
+                        width: 90%;
+                        height: 50%;
+                        object-fit: cover;
+                    }
+                }
+            }
+
+        }
+
+        .profilOUt {
+            width: 30%;
+            height: 47px;
+            display: flex;
+            align-items: center;
+
+            .profil {
+                width: 40%;
+                height: 47px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .imageProfile {
+                    width: 47px;
+                    height: 47px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 200px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .infoProfile {
+                    width: auto;
+                    height: 47px;
+                    color: $white;
+
+                    h3 {
+                        font-size: 1rem;
+                        margin: 3px 0px;
+                    }
+
+                    p {
+                        color: rgba(255, 255, 255, 0.500);
+                        font-size: 0.9rem;
+                        margin: 0;
+                    }
+                }
+            }
+
+            .logOut {
+                width: 30%;
+                height: 47px;
+                display: flex;
+                align-items: center;
+                background: $orange;
+                justify-content: space-evenly;
+                border-radius: 15px;
+
+                .text {
+                    width: 80%;
+                    height: 47px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                a {
+                    font-weight: 600;
+                    color: $black;
+                    font-size: 1rem;
+                }
+
+                .img {
+                    width: 28px;
+                    height: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+}
+.title{
+    color: white;
+    text-align: center;
+    font-size: 4rem;
+}
+main{
+    h3{
+        color: white;
+    }
+}
+.chart {
+    width: 90%;
+    height: 700px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+
+    div{
+        width: 30%;
+        height: 500px;
+    }
+}

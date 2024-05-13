@@ -1,0 +1,325 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Urbanist";
+  background: #0e0e0e;
+}
+body a {
+  text-decoration: none;
+  color: black;
+}
+
+#page {
+  width: 100%;
+  height: 100vh;
+  background: #0e0e0e;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+#page a {
+  text-decoration: none;
+}
+
+header {
+  width: 90%;
+  height: 80px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+header .logo {
+  width: 130px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header .logo img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin: auto;
+}
+header nav {
+  width: 90%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+header nav .menuNav {
+  width: 40%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+header nav .menuNav ul {
+  width: 30%;
+  min-width: 530px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+header nav .menuNav ul li {
+  color: white;
+  list-style: none;
+}
+header nav .menuNav ul li a {
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-weight: 500;
+  color: white;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.0666666667);
+  transition: 0.1s ease-in-out;
+}
+header nav .menuNav ul li a:hover {
+  background: rgba(255, 255, 255, 0.2196078431);
+}
+header nav .menuNav ul li .actif {
+  background: white;
+  color: black;
+}
+header nav .recherche {
+  width: 20%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ffffff;
+  border-radius: 200px;
+}
+header nav .recherche form {
+  width: 100%;
+  height: 47px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+header nav .recherche form input[type=text] {
+  width: 85%;
+  height: 47px;
+  border: none;
+  background: none;
+  color: white;
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form input:focus {
+  outline: none;
+}
+header nav .recherche form input::-moz-placeholder {
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form input::placeholder {
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form button {
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  background: white;
+  border-radius: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+header nav .recherche form button img {
+  width: 90%;
+  height: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+header nav .profilOUt {
+  width: 30%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+}
+header nav .profilOUt .profil {
+  width: 40%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header nav .profilOUt .profil .imageProfile {
+  width: 47px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 200px;
+  overflow: hidden;
+}
+header nav .profilOUt .profil .imageProfile img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+header nav .profilOUt .profil .infoProfile {
+  width: auto;
+  height: 47px;
+  color: #ffffff;
+}
+header nav .profilOUt .profil .infoProfile h3 {
+  font-size: 1rem;
+  margin: 3px 0px;
+}
+header nav .profilOUt .profil .infoProfile p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin: 0;
+}
+header nav .profilOUt .logOut {
+  width: 30%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  background: #ffc887;
+  justify-content: space-evenly;
+  border-radius: 15px;
+}
+header nav .profilOUt .logOut .text {
+  width: 80%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+}
+header nav .profilOUt .logOut a {
+  font-weight: 600;
+  color: #0e0e0e;
+  font-size: 1rem;
+}
+header nav .profilOUt .logOut .img {
+  width: 28px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+header nav .profilOUt .logOut .img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.title {
+  color: white;
+  text-align: center;
+  font-size: 4rem;
+}
+
+main h3 {
+  color: white;
+}
+
+.fichier {
+  width: 90%;
+  height: 700px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+}
+.fichier .fichierOne {
+  width: 390px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  background: #181818;
+  border-radius: 50px;
+  overflow: hidden;
+  color: white;
+}
+.fichier .fichierOne .image {
+  width: 95%;
+  height: 400px;
+  background: #f36e50;
+  background-image: url(../img/fichierPic.jpg);
+  background-size: cover;
+  margin: auto;
+  border-radius: 40px;
+  margin-top: 11px;
+}
+.fichier .fichierOne .image .texte {
+  width: 80%;
+  margin: auto;
+}
+.fichier .fichierOne .image .texte h1 {
+  width: 30%;
+  font-size: 3rem;
+  font-weight: 700;
+}
+.fichier .fichierOne .typeCulture {
+  min-width: 95%;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.0509803922);
+  border-radius: 40px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.fichier .fichierOne .typeCulture .nom {
+  width: 40%;
+  height: 100px;
+}
+.fichier .fichierOne .typeCulture .nom h2 {
+  font-size: 2rem;
+  margin: 15px 0px;
+  margin-bottom: 0;
+}
+.fichier .fichierOne .typeCulture .nom p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.502);
+  font-weight: 200;
+  margin-top: 5px;
+}
+.fichier .fichierOne .typeCulture .partielle {
+  width: 30%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fichier .fichierOne .typeCulture .partielle h4 {
+  color: rgba(255, 255, 255, 0.529);
+  font-weight: 100;
+  font-size: 1.2REM;
+}
+.fichier .fichierOne .terrain {
+  width: 95%;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.0509803922);
+  border-radius: 40px;
+  margin: auto;
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffc887;
+  text-transform: uppercase;
+  transition: 0.2s ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0);
+}
+.fichier .fichierOne .terrain:hover {
+  border: 1px solid #ffc887;
+}/*# sourceMappingURL=style.css.map */
