@@ -76,7 +76,7 @@
                 <!-- ----------------------Code taloha------------------------- -->
                 <header>
                     <div class="logo">
-                        <img src="${pageContext.request.contextPath}/assets/img/logoWhite.png" alt="" />
+                        <%-- <img src="${pageContext.request.contextPath}/assets/img/logoWhite.png" alt="" /> --%>
                     </div>
                     <nav>
                         <div class="menuNav">
@@ -117,7 +117,7 @@
                         </div>
                     </nav>
                 </header>
-                <h3 class="title ">PRODUCT LIST</h3>
+                <h3 class="title ">Liste de Votre Devis</h3>
                 
                 <section class="fichier">
                     <% 

@@ -1,0 +1,531 @@
+::-webkit-scrollbar {
+  width: 10px;
+  background: rgb(47, 47, 47);
+}
+
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 10px;
+}
+
+.block {
+  display: block;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Urbanist";
+  background: #0e0e0e;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+body a {
+  text-decoration: none;
+  color: black;
+}
+
+#page {
+  width: 100%;
+  height: 100vh;
+  background: #0e0e0e;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  overflow-y: scroll;
+}
+#page a {
+  text-decoration: none;
+}
+
+header {
+  width: 90%;
+  height: 80px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -35px;
+}
+header .logo {
+  width: 130px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+header .logo img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  margin: auto;
+}
+header nav {
+  width: 90%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+header nav .menuNav {
+  width: 40%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+header nav .menuNav ul {
+  width: 30%;
+  min-width: 530px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+header nav .menuNav ul li {
+  color: white;
+  list-style: none;
+}
+header nav .menuNav ul li a {
+  padding: 14px 35px;
+  border-radius: 40px;
+  font-weight: 500;
+  color: white;
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.0666666667);
+  transition: 0.1s ease-in-out;
+}
+header nav .menuNav ul li a:hover {
+  background: rgba(255, 255, 255, 0.2196078431);
+}
+header nav .menuNav ul li .actif {
+  background: white;
+  color: black;
+}
+header nav .recherche {
+  width: 20%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ffffff;
+  border-radius: 200px;
+}
+header nav .recherche form {
+  width: 100%;
+  height: 47px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+header nav .recherche form input[type=text] {
+  width: 85%;
+  height: 47px;
+  border: none;
+  background: none;
+  color: white;
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form input:focus {
+  outline: none;
+}
+header nav .recherche form input::-moz-placeholder {
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form input::placeholder {
+  font-family: "Urbanist";
+  text-align: center;
+}
+header nav .recherche form button {
+  width: 37px;
+  height: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  background: white;
+  border-radius: 200px;
+  overflow: hidden;
+  cursor: pointer;
+}
+header nav .recherche form button img {
+  width: 90%;
+  height: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+header nav .profilOUt {
+  width: 30%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+}
+header nav .profilOUt .profil {
+  width: 40%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+header nav .profilOUt .profil .imageProfile {
+  width: 47px;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 200px;
+  overflow: hidden;
+}
+header nav .profilOUt .profil .imageProfile img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+header nav .profilOUt .profil .infoProfile {
+  width: auto;
+  height: 47px;
+  color: #ffffff;
+}
+header nav .profilOUt .profil .infoProfile h3 {
+  font-size: 1rem;
+  margin: 3px 0px;
+}
+header nav .profilOUt .profil .infoProfile p {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.9rem;
+  margin: 0;
+}
+header nav .profilOUt .logOut {
+  width: 30%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  background: #ffc887;
+  justify-content: space-evenly;
+  border-radius: 15px;
+}
+header nav .profilOUt .logOut .text {
+  width: 80%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+}
+header nav .profilOUt .logOut a {
+  font-weight: 600;
+  color: #0e0e0e;
+  font-size: 1rem;
+}
+header nav .profilOUt .logOut .img {
+  width: 28px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+header nav .profilOUt .logOut .img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.generateProd {
+  width: 80%;
+  height: auto;
+  margin: auto;
+  margin-top: 0;
+}
+.generateProd h1 {
+  font-weight: 100;
+}
+.generateProd h1 span {
+  font-weight: 500;
+}
+.generateProd form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.generateProd form select {
+  width: 310px;
+  height: 50px;
+  background: #1c2830;
+  border: none;
+  color: rgb(119, 119, 119);
+  padding: 10px;
+}
+.generateProd form select option {
+  width: 99%;
+  height: 50px;
+  background: #e9e9e9;
+  border: none;
+  color: rgb(0, 0, 0);
+}
+.generateProd form input {
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1c2830;
+  color: white;
+  font-family: "poppins";
+  width: 310px;
+}
+.generateProd form input::-moz-placeholder {
+  font-family: "poppins";
+}
+.generateProd form input::placeholder {
+  font-family: "poppins";
+}
+.generateProd form input:focus {
+  outline: none;
+  border: 1px solid violet;
+}
+.generateProd form input[type=submit] {
+  background-color: #546ca8;
+  padding: 15px 40px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+.generateProd form input[type=submit]:hover {
+  background-color: rgba(84, 108, 168, 0.0784313725);
+  border: 1px solid;
+}
+.generateProd .textTitre {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 100;
+  margin: auto;
+  color: #ffffff;
+}
+.generateProd .textTitre span {
+  font-weight: 500;
+}
+.generateProd .insertionProduit {
+  width: 100%;
+  height: auto;
+  margin: auto;
+  color: #ffffff;
+  margin: 60px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.generateProd .insertionProduit .gestionProduit {
+  width: 70%;
+  height: auto;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit {
+  width: 100%;
+  height: auto;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table {
+  border: 0px solid black;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table .texteFormat {
+  padding: 0px;
+  text-align: start;
+  padding: 20px 20px 20px 5px;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table .chiffreFormat {
+  padding: 0px;
+  text-align: end;
+  padding: 20px 5px 20px 20px;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td {
+  background: #1c2830;
+  font-weight: 200;
+  border: 0;
+  text-align: start;
+  white-space: nowrap;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td a {
+  color: white;
+  padding: 10px 24px;
+  background: #546ca8;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  font-weight: 300;
+  border: 1px solid rgba(205, 74, 72, 0);
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td a:hover {
+  color: #546ca8;
+  border: 1px solid #546ca8;
+  background-color: rgba(255, 255, 255, 0);
+  font-weight: 300;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td .delete {
+  background: #cd4a48;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td .delete:hover {
+  color: #cd4a48;
+  border: 1px solid #cd4a48;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td .show {
+  background: #395256;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table td .show:hover {
+  color: #395256;
+  border: 1px solid #395256;
+}
+.generateProd .insertionProduit .gestionProduit .listProduit table th {
+  padding: 10px;
+  background: #d6ce48;
+  color: #00080d;
+  font-weight: 500;
+  border: 0;
+  white-space: nowrap;
+}
+@keyframes anamimationproductiondown {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+@keyframes anamimationproductionup {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  background-color: rgba(0, 8, 13, 0.631372549);
+  z-index: 9999;
+  font-family: "Urbanist";
+}
+.popup .textTitre {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 100;
+  margin: auto;
+  color: #ffffff;
+}
+.popup .textTitre span {
+  font-weight: 500;
+}
+.popup .popup-content {
+  background-color: white;
+  width: 700px;
+  padding: 50px;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.popup .popup-content .production {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  animation: anamimationproductiondown 0.4s ease-in-out;
+}
+.popup .popup-content .production .modificationProduit {
+  display: flex;
+  flex-direction: row;
+}
+.popup .popup-content .production .modificationProduit form {
+  width: 100%;
+  display: flex;
+  gap: 5px;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.popup .popup-content .production .modificationProduit form input, .popup .popup-content .production .modificationProduit form textarea {
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #1c2830;
+  color: white;
+  font-family: "poppins";
+  width: 80%;
+  margin: auto;
+}
+.popup .popup-content .production .modificationProduit form input::-moz-placeholder {
+  font-family: "poppins";
+}
+.popup .popup-content .production .modificationProduit form input::placeholder {
+  font-family: "poppins";
+}
+.popup .popup-content .production .modificationProduit form input:focus {
+  outline: none;
+  border: 1px solid violet;
+}
+.popup .popup-content .production .modificationProduit form input[type=submit] {
+  background-color: #546ca8;
+  padding: 15px 40px;
+  cursor: pointer;
+  transition: 0.4s ease-in-out;
+}
+.popup .popup-content .production .modificationProduit form input[type=submit]:hover {
+  background-color: rgba(84, 108, 168, 0.0784313725);
+  border: 1px solid;
+}
+.popup .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 25pt;
+}
+.popup .close:hover {
+  color: red;
+}
+.popup a {
+  color: white;
+  padding: 10px 24px;
+  background: #546ca8;
+  border-radius: 5px;
+  transition: 0.4s ease-in-out;
+  font-weight: 300;
+  border: 1px solid rgba(205, 74, 72, 0);
+}
+.popup a:hover {
+  color: #546ca8;
+  border: 1px solid #546ca8;
+  background-color: rgba(255, 255, 255, 0);
+  font-weight: 300;
+}
+.popup .delete {
+  background: #cd4a48;
+}
+.popup .delete:hover {
+  color: #cd4a48;
+  border: 1px solid #cd4a48;
+}
+.popup .show {
+  background: #395256;
+}
+.popup .show:hover {
+  color: #395256;
+  border: 1px solid #395256;
+}/*# sourceMappingURL=tableau.css.map */
