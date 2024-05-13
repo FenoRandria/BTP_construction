@@ -80,7 +80,7 @@
                                 {
                                     if (this.readyState === 4 && this.status === 200) 
                                     {
-                                        window.location.href = 'http://localhost:8084/promo13_parking';
+                                        window.location.href = 'http://localhost:8084/BTP_construction';
                                     }
                                 };
                                 xmlhttp.open("POST", "logout", true);
@@ -286,7 +286,7 @@
                             var content = parts[1];
                             if (type === 'success') {
                                 console.log('Succès: ' + content);
-                                window.location.href = 'http://localhost:8084/promo13_parking'+content;
+                                window.location.href = 'http://localhost:8084/BTP_construction'+content;
                             } else {
                                 $("#" + type).text(content);
                                 console.error('Erreur: ' + content);

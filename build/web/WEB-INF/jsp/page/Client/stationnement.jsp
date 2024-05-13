@@ -277,7 +277,7 @@
                             var content = parts[1];
                             if (type === 'success') {
                                 console.log('Succès: ' + content);
-                                window.location.href = 'http://localhost:8084/promo13_parking'+content;
+                                window.location.href = 'http://localhost:8084/BTP_construction'+content;
                             } else {
                                 $("#" + type).text(content);
                                 console.error('Erreur: ' + content);

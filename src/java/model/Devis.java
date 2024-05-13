@@ -41,6 +41,11 @@ public class Devis {
         this.createdAt = createdAt;
     }
 
+    public Devis(int id) throws Exception{
+        if(id <= 0) throw new Exception("references devis invalid!");
+        this.id = id;
+    }
+
     public Devis(int idUser, String descriptions, int idTypeFinition, int idTypeMaison, Date dateDebut) throws Exception {
         this.setIdUser(idUser);
         this.setDescriptions(descriptions);

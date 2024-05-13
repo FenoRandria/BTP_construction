@@ -1,7 +1,15 @@
+<%@page import="model.Devis"%>
+<%@page import="java.util.List"%>
+<%@page import="model.User"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<% 
+    User user = (User) session.getAttribute("user");
+    List<Devis> devis = (List<Devis>) request.getAttribute("devis");
+    
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,10 +41,10 @@
             <li>
                 <a href="devis-form">
                     <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="link_name">Création Devis</span>
+                    <span class="link_name">CrÃ©ation Devis</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="devis-form">Création Devis</a></li>
+                    <li><a class="link_name" href="devis-form">CrÃ©ation Devis</a></li>
                 </ul>
             </li>
             
@@ -46,7 +54,7 @@
                         <img src="${pageContext.request.contextPath}/assets/img/our.png" alt="profileImg">
                     </div>
                     <div class="name-job">
-                        <div class="profile_name"><% if("misy"!=null) out.print("Feno"); %></div>
+                        <div class="profile_name"><% if(user!=null) out.print(user.getNumero()); %></div>
                         <div class="job">Developper</div>
                     </div>
                         <i class='bx bx-log-out' onclick="Deconnect()" ></i>
@@ -102,7 +110,7 @@
                                     <img src="${pageContext.request.contextPath}/assets/img/me.jpeg" alt="">
                                 </div>
                                 <div class="infoProfile">
-                                    <h3><% if("misy"!=null) out.print("Feno"); %></h3>
+                                    <h3><% if(user!=null) out.print(user.getNumero()); %></h3>
                                     <p>Actif</p>
                                 </div>
                             </div>
@@ -125,130 +133,45 @@
                         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
                         java.sql.Date daty = Date.valueOf("2023-05-15");
                     %>
-                    <!----------------/Produit anakiray--------------->
-                    <div class="fichierTwo">
-                        <div class="image_produit">
-                            <div class="imageGauche">
-                                <img src="${pageContext.request.contextPath}/assets/img/class1.jpeg" alt="">
-                            </div>
-                            <div class="imageDroite">
-                                <div class="img1Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class2.jpeg" alt="">
+                    
+                    
+                    <% if(devis!=null) { %>
+                        <% for(int i = 0; i< devis.size(); i++) { %>
+                            <% Devis dev = (Devis) devis.get(i); %>
+                            <!----------------/Produit anakiray--------------->
+                            <div class="fichierTwo">
+                                <div class="image_produit">
+                                    <div class="imageGauche">
+                                        <img src="${pageContext.request.contextPath}/assets/img/class1.jpeg" alt="">
+                                    </div>
+                                    <div class="imageDroite">
+                                        <div class="img1Droite">
+                                            <img src="${pageContext.request.contextPath}/assets/img/class2.jpeg" alt="">
+                                        </div>
+                                        <div class="img2Droite">
+                                            <img src="${pageContext.request.contextPath}/assets/img/class3.jpeg" alt="">
+                                        </div>
+                                        <div class="img3Droite">
+                                            <img src="${pageContext.request.contextPath}/assets/img/class4.jpeg" alt="">
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="img2Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class3.jpeg" alt="">
-                                </div>
-                                <div class="img3Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class4.jpeg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="prix">
-                            <div id="descriptions">
-                                <h4>Devis: <span>01</span></h4>
-                                <h4>Montant: <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Reste à payer : <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Maison de Type: <span>Villa (Type 1)</span></h4>
-                                <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(daty.getTime()))%></p>
-                            </div>
-                            
-                            <a href="devis-details?devis=2" class="buttonProduit">Detailer</a>
-                            <a href="devis-paiement?devis=2" style="background-color:#005b85" class="buttonProduit">Payer</a>
-                        </div>
-                    </div>
-                    <!----------------/Produit anakiray--------------->
-                    <div class="fichierTwo">
-                        <div class="image_produit">
-                            <div class="imageGauche">
-                                <img src="${pageContext.request.contextPath}/assets/img/class1.jpeg" alt="">
-                            </div>
-                            <div class="imageDroite">
-                                <div class="img1Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class2.jpeg" alt="">
-                                </div>
-                                <div class="img2Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class3.jpeg" alt="">
-                                </div>
-                                <div class="img3Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class4.jpeg" alt="">
+                                <div class="prix">
+                                    <div id="descriptions">
+                                        <h4>Devis: <span><%= dev.getId() %></span></h4>
+                                        <h4>Montant: <span><%= formatNumber.format(dev.getMontant())%></span></h4>
+                                        <h4>Reste Ã  payer : <span><%= formatNumber.format(dev.getMontant())%></span></h4>
+                                        <h4>Maison de Type: <span><%= dev.getIdTypeMaison() %></span></h4>
+                                        <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(dev.getDateDebut().getTime()))%></p>
+                                    </div>
+
+                                    <a href="devis-details?devis=<%= dev.getId() %>" class="buttonProduit">Detailer</a>
+                                    <a href="devis-paiement?devis=<%= dev.getId() %>" style="background-color:#005b85" class="buttonProduit">Payer</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="prix">
-                            <div id="descriptions">
-                                <h4>Devis: <span>01</span></h4>
-                                <h4>Montant: <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Reste à payer : <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Maison de Type: <span>Villa (Type 1)</span></h4>
-                                <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(daty.getTime()))%></p>
-                            </div>
-                            
-                            <a href="devis-details?devis=2" class="buttonProduit">Detailer</a>
-                            <a href="devis-paiement?devis=2" style="background-color:#005b85" class="buttonProduit">Payer</a>
-                        </div>
-                    </div>
-                    <!----------------/Produit anakiray--------------->
-                    <div class="fichierTwo">
-                        <div class="image_produit">
-                            <div class="imageGauche">
-                                <img src="${pageContext.request.contextPath}/assets/img/class1.jpeg" alt="">
-                            </div>
-                            <div class="imageDroite">
-                                <div class="img1Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class2.jpeg" alt="">
-                                </div>
-                                <div class="img2Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class3.jpeg" alt="">
-                                </div>
-                                <div class="img3Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class4.jpeg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="prix">
-                            <div id="descriptions">
-                                <h4>Devis: <span>01</span></h4>
-                                <h4>Montant: <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Reste à payer : <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Maison de Type: <span>Villa (Type 1)</span></h4>
-                                <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(daty.getTime()))%></p>
-                            </div>
-                            
-                            <a href="devis-details?devis=2" class="buttonProduit">Detailer</a>
-                            <a href="devis-paiement?devis=2" style="background-color:#005b85" class="buttonProduit">Payer</a>
-                        </div>
-                    </div>
-                    <!----------------/Produit anakiray--------------->
-                    <div class="fichierTwo">
-                        <div class="image_produit">
-                            <div class="imageGauche">
-                                <img src="${pageContext.request.contextPath}/assets/img/class1.jpeg" alt="">
-                            </div>
-                            <div class="imageDroite">
-                                <div class="img1Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class2.jpeg" alt="">
-                                </div>
-                                <div class="img2Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class3.jpeg" alt="">
-                                </div>
-                                <div class="img3Droite">
-                                    <img src="${pageContext.request.contextPath}/assets/img/class4.jpeg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="prix">
-                            <div id="descriptions">
-                                <h4>Devis: <span>01</span></h4>
-                                <h4>Montant: <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Reste à payer : <span><%= formatNumber.format(10000000)%></span></h4>
-                                <h4>Maison de Type: <span>Villa (Type 1)</span></h4>
-                                <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(daty.getTime()))%></p>
-                            </div>
-                            
-                            <a href="devis-details?devis=2" class="buttonProduit">Detailer</a>
-                            <a href="devis-paiement?devis=2" style="background-color:#005b85" class="buttonProduit">Payer</a>
-                        </div>
-                    </div>
+                        <% } %>
+                    <% } %>
+                        
                 </section>
                 <!-- ----------------------Code taloha------------------------- -->
             </div>

@@ -103,14 +103,57 @@ create table detailDevisMaison(
     createdAt TIMESTAMP DEFAULT NOW()
 );
 
-
-
-
-INSERT INTO detailDevisMaison (descriptions, prixUnitaire, quantite, unite, idTypeMaison) 
+INSERT INTO detailDevisMaison (descriptions, quantite, prixUnitaire, unite, idTypeMaison)
 VALUES 
-('Porte en bois', 150.00, 5, 'pièces', 1),
-('Fenêtre en aluminium', 200.00, 10, 'pièces', 2),
-('Toit en tuiles', 300.00, 1, 'm²', 3);
+    ('mur de soutènement et demi Clôture ht 1m', 25, 190000.00, 'm3', 1),
+    ('maçonnerie de moellons, ep= 35cm', 150, 10100.50, 'm2', 1),
+    ('béton armé dosé à 350kg/m3: semelles isolées', 15.5, 36000, 'm2', 1),
+    ('béton armé dosé à 350kg/m3: amorces poteaux', 900, 63000, 'm3', 1),
+    ('béton armé dosé à 350kg/m3: chaînage bas de 20x20', 720, 56000, 'm3', 1),
+    ('Décapage des terrains meubles', 1.00, 189200.00, 'fft', 1),
+    ('Dressage du plateforme', 160, 56000, 'm2', 1),
+    ('Fouille d''ouvrage terrain ferme', 106, 37800.80, 'm2', 1),
+    ('Remblai d''ouvrage', 24.44, 229514.29, 'm3', 1),
+    ('Travaux d''implantation', 780.55, 585000.49, 'm3', 1),
+    ('béton ordinaire dosé à 300kg/m3 pour forr', 14.40, 39075.62, 'm3', 1),
+    ('chape de 2cm', 800.55, 555010.80, 'm3', 1),
+    ('remblai technique', 30080.30, 780.55, 'm3', 1),
+    ('herrissonage ep=10', 321000.85, 200.85, 'm3', 1);
+
+INSERT INTO detailDevisMaison (descriptions, quantite, prixUnitaire, unite, idTypeMaison)
+VALUES 
+    ('mur de soutènement et demi Clôture ht 1m', 30, 180000.00, 'm3', 2),
+    ('maçonnerie de moellons, ep= 35cm', 160, 10500.00, 'm2', 2),
+    ('béton armé dosé à 350kg/m3: semelles isolées', 13, 35000.00, 'm2', 2),
+    ('béton armé dosé à 350kg/m3: amorces poteaux', 850, 62000.00, 'm3', 2),
+    ('béton armé dosé à 350kg/m3: chaînage bas de 20x20', 690, 54000.00, 'm3', 2),
+    ('Décapage des terrains meubles', 1.00, 180000.00, 'fft', 2),
+    ('Dressage du plateforme', 150, 54000.00, 'm2', 2),
+    ('Fouille d''ouvrage terrain ferme', 100, 36000.00, 'm2', 2),
+    ('Remblai d''ouvrage', 24.44, 229514.29, 'm3', 2),
+    ('Travaux d''implantation', 750.00, 580000.49, 'm3', 2),
+    ('béton ordinaire dosé à 300kg/m3 pour forr', 12.00, 38075.62, 'm3', 2),
+    ('chape de 2cm', 750.00, 550010.80, 'm3', 2),
+    ('remblai technique', 32080.30, 800.55, 'm3', 2),
+    ('herrissonage ep=10', 321000.85, 200.85, 'm3', 2);
+
+
+
+
+insert into devis (iduser,descriptions,idtypefinition,idtypemaison,datedebut,datefin,montant,pourcentagefinition) values 
+(
+    id,
+    ?,
+    ?,
+    ?,
+    'datedebut',
+    SELECT '2024-05-13'::DATE + (SELECT nbjourconstruction * INTERVAL '1 day' FROM typemaison where id = ?),
+    select sum(quantite*prixunitaire) as montant from detaildevismaison where idtypemaison = ?,
+    select pourcentage from typeFinition where id =?
+);
+
+
+insert into devis  (idUser,) values (select sum(quantite*prixunitaire) as montant from detaildevismaison where idtypemaison = 1 group by idtypemaison)
 
 -- ------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -128,5 +171,18 @@ create table Devis(
     corbeille int default 0,
     createdAt TIMESTAMP DEFAULT NOW()
 );
+
+
+create table paiement(
+    id serial primary key not null,
+    idDevis int REFERENCES Devis(id) not null,
+    montant numeric(20,2) not null,
+    datePaiement TIMESTAMP not null
+);
+
+INSERT INTO payment (idDevis, montant, datePayment) VALUES
+(1, 500.00, '2024-05-14 08:30:00');
+(2, 750.75, '2024-05-11 10:00:00');
+
 
 insert into users (numero) values ('0345137423') returning *
