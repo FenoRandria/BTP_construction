@@ -31,6 +31,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import model.Dashboard;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 /**
  *
@@ -47,7 +48,13 @@ public class AuthController {
     
     @RequestMapping(value = "/admin")
     public String loginPageAdmin(Model model, HttpServletRequest req) {
-        return "page/auth/login-admin";
+//        return "page/auth/login-admin";  
+        Dashboard dash = new Dashboard();
+        model.addAttribute("totalMontant",dash.sommeTotalMontant());
+        model.addAttribute("devisannee",dash.findmontantdevisannee());
+        model.addAttribute("devismois",dash.findmontantdevismois());
+        return "page/Admin/dashboard";
+
     }
     
     @RequestMapping(value = "/admin-login", method = RequestMethod.POST)

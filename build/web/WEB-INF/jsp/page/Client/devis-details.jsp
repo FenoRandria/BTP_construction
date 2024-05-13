@@ -4,7 +4,23 @@
     Author     : fenor
 --%>
 
+<%@page import="java.sql.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="model.V_DetailDevisMaison"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+
+<% 
+    List<V_DetailDevisMaison> detailsdevis = (List<V_DetailDevisMaison>) request.getAttribute("detailsdevis");     
+    
+%>
+ <% 
+    DecimalFormat formatNumber = new DecimalFormat("#,##0.00"); 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +63,13 @@
     </style>
 </head>
 <body>
-    <h2>Devis</h2>
+    <h2>Devis References : <% 
+            if (detailsdevis.get(0).getIdDevis() > 0) {
+                out.print(detailsdevis.get(0).getIdDevis());
+            } 
+        %>
+
+    </h2>
     <table>
         <thead>
             <tr>
@@ -60,63 +82,29 @@
             </tr>
         </thead>
         <tbody>
-            <!-- -------------Mini-titre---------- -->
-            <tr>
-                <td>000</td>
-                <td class="mini-titre">TRAVAUX PREPARATOIRE</td>
-            </tr>
-            <!-- -------------Mini-titre---------- -->
             <!-- -------------Donnee---------- -->
-            <tr>
-                <td>001</td>
-                <td>mur de soutenement et demi Cloture ht 1m m3</td>
-                <td>26,98</td>
-                <td>5 126 200,00</td>
-                <td>5 126 200,00</td>
-                <td>190 000,00</td>
-            </tr>
+            <%  
+                double total = 0.0;
+                if(detailsdevis!=null) { %>
+                <% for(int i = 0; i< detailsdevis.size(); i++) { %>
+                    <% V_DetailDevisMaison details = (V_DetailDevisMaison) detailsdevis.get(i); 
+                        total = details.getMontant();
+                    %>
+                        <tr>
+                            <td><%= details.getIdDetail() %></td>
+                            <td><%= details.getDescriptions() %></td>
+                            <td><%= details.getUnite() %></td>
+                            <td><%= formatNumber.format(details.getQuantite()) %></td>
+                            <td><%= formatNumber.format(details.getPrixUnitaire()) %></td>
+                            <td><%= formatNumber.format(details.getSousmontant()) %></td>
+                        </tr>
+                <% } %>
+            <% } %>
             <!-- -------------Donnee---------- -->
-            <tr></tr>
-                <td colspan="5" style="text-align:right;"  class="mini-titre">TOTAL</td>
-                <td  class="mini-titre">10 115 666,98</td>
-            </tr>
-             <!-- -------------Mini-titre---------- -->
-             <tr>
-                <td>000</td>
-                <td class="mini-titre">TRAVAUX PREPARATOIRE</td>
-            </tr>
-            <!-- -------------Mini-titre---------- -->
-               <!-- -------------Donnee---------- -->
-               <tr>
-                <td>001</td>
-                <td>mur de soutenement et demi Cloture ht 1m m3</td>
-                <td>26,98</td>
-                <td>5 126 200,00</td>
-                <td>5 126 200,00</td>
-                <td>190 000,00</td>
-            </tr>
-            <!-- -------------Donnee---------- -->   <!-- -------------Donnee---------- -->
-            <tr>
-                <td>001</td>
-                <td>mur de soutenement et demi Cloture ht 1m m3</td>
-                <td>26,98</td>
-                <td>5 126 200,00</td>
-                <td>5 126 200,00</td>
-                <td>190 000,00</td>
-            </tr>
-            <!-- -------------Donnee---------- -->   <!-- -------------Donnee---------- -->
-            <tr>
-                <td>001</td>
-                <td>mur de soutenement et demi Cloture ht 1m m3</td>
-                <td>26,98</td>
-                <td>5 126 200,00</td>
-                <td>5 126 200,00</td>
-                <td>190 000,00</td>
-            </tr>
-            <!-- -------------Donnee---------- -->
+            
             <tr></tr>
             <td colspan="5" style="text-align:right;"  class="mini-titre">TOTAL</td>
-            <td  class="mini-titre">10 115 666,98</td>
+            <td  class="mini-titre"><%= formatNumber.format(total) %></td>
         </tr>
         </tbody>
     </table>

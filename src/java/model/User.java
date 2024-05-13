@@ -23,7 +23,7 @@ import java.util.List;
  */
 
 @Table(tableName="users")
-public class User implements Serializable{
+public class User{
 
     @Colonne(colonneName ="id")
     int id;
@@ -206,6 +206,7 @@ public class User implements Serializable{
             }
         }
     }
+    
     
      // authenticateUser par numero telephone
     public Object authenticateUser(String numero, Connection con) throws Exception {

@@ -24,6 +24,7 @@ import model.Devis;
 import model.TypeFinition;
 import model.TypeMaison;
 import model.User;
+import model.V_DetailDevisMaison;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -181,17 +182,33 @@ public class ActivityUserController {
     }
     
     @RequestMapping(value = "/devis-details")
-    public String detailsDevisClient(Model model, HttpServletRequest req) {
+    public String detailsDevisClient(@RequestParam("devis") int idDevis, Model model, HttpServletRequest req) {
         HttpSession session = req.getSession();
         User user = (User)session.getAttribute("user");
         String role = "user";
         if(user == null) return "redirect:/user";
+        if(idDevis <= 0) return "redirect:/devis";
+        
         if(OutilsFormat.profileValid(user))
         {
-            return "page/Client/devis-details";
+            try {
+               Connection con = new ConnectionDB().getConnection("postgres");
+               GenericDao gen = new GenericDao();
+               Devis devis = new Devis(idDevis);
+               V_DetailDevisMaison vd = new V_DetailDevisMaison();
+               devis =(Devis) gen.find(devis,con).get(0);
+               if(devis.getIdUser()!=user.getId()) return "redirect:/devis?error=userInconnu";
+               List<V_DetailDevisMaison> listDetails = (List<V_DetailDevisMaison>) gen.executeQueryGeneral(vd, "select * from V_DetailDevisMaison where idDevis = "+idDevis, con);
+               model.addAttribute("detailsdevis", listDetails);
+               return "page/Client/devis-details";           
+            }catch(Exception e){
+                e.printStackTrace();
+                return "redirect:/devis?error=true";
+            }
         } else {
-            return "redirect:/user";
+            return "redirect:/devis";
         }
+        
     }
     
     @RequestMapping(value = "/devis-paiement")
@@ -297,6 +314,5 @@ public class ActivityUserController {
         }
         out.print(String.join("+", messages));
     }
-    
 }
     

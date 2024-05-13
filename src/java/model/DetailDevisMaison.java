@@ -20,6 +20,7 @@ public class DetailDevisMaison {
     private int idTypeMaison;
     private int corbeille;
     private Timestamp createdAt;
+    
 
     public DetailDevisMaison(int id, String descriptions, double prixUnitaire, double quantite, String unite, int idTypeMaison, int corbeille, Timestamp createdAt) throws Exception{
         this.id = id;
@@ -112,6 +113,4 @@ public class DetailDevisMaison {
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
-    
-    
 }

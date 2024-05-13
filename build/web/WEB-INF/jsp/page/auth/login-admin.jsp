@@ -39,7 +39,7 @@
                         }
                 </style>
                 <h3 class="title ">Admin</h3>
-                <p id="errorMsg"> </p>
+                <p id="error"> </p>
                 <!-- Email -->
                 <label for="email">Email : <p id="errorMail" style="color:red"></p></label>
                 <input type="email" id="email" name="mail" value="admin@gmail.com">
@@ -75,7 +75,7 @@
                         var type = parts[0];
                         var content = parts[1];
                         if (type === 'success') {
-                            console.log('Succ�s: ' + content);
+                            console.log('success: ' + content);
                             window.location.href = 'http://localhost:8084/BTP_construction'+content;
                         } else {
                             $("#" + type).text(content);
@@ -84,10 +84,8 @@
                     });
                 }
             };
-            let  mail = $('#email').val();
-            let mdp = $('#motdepasse').val();
             
-            var params = "mail=" + encodeURIComponent(mail) + "&mdp=" + encodeURIComponent(mdp);
+             let params = $('form').serialize().toString();
             xmlhttp.open("POST", "admin-login", true);
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xmlhttp.send(params);

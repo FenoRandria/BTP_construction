@@ -186,3 +186,51 @@ INSERT INTO payment (idDevis, montant, datePayment) VALUES
 
 
 insert into users (numero) values ('0345137423') returning *
+
+
+
+
+-- view pdf :
+
+CREATE OR REPLACE VIEW v_detaildevismaison AS (
+    SELECT 
+        detaildevismaison.id AS idDetail,
+        devis.iduser,
+        devis.id AS idDevis,
+        devis.montant, 
+        devis.idtypemaison,
+        detaildevismaison.descriptions,                                      
+        detaildevismaison.prixunitaire,
+        detaildevismaison.quantite, 
+        detaildevismaison.unite,
+        detaildevismaison.quantite * detaildevismaison.prixunitaire AS sousmontant 
+    FROM devis
+    JOIN typemaison ON devis.idtypemaison = typemaison.id
+    JOIN detaildevismaison ON typemaison.id = detaildevismaison.idtypemaison
+);
+
+
+Create or replace view v_DevisMois as 
+    SELECT 
+        EXTRACT(YEAR FROM dateDebut) AS year,
+        EXTRACT(MONTH FROM dateDebut) AS month,
+        TO_CHAR(dateDebut, 'Month') AS month_name,
+        SUM(montant) AS montantTotal
+    FROM 
+        devis
+    GROUP BY 
+        EXTRACT(YEAR FROM dateDebut), EXTRACT(MONTH FROM dateDebut), TO_CHAR(dateDebut, 'Month')
+    ORDER BY 
+        year, month;
+
+------------------------------------------------------------------------------------------
+
+Create or replace view v_DevisAnnee as 
+SELECT 
+    EXTRACT(YEAR FROM dateDebut) AS year,
+    SUM(montant) AS montantTotal
+FROM 
+    devis
+GROUP BY 
+    EXTRACT(YEAR FROM dateDebut)
+ORDER BY year;

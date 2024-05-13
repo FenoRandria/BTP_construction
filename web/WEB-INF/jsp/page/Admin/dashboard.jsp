@@ -1,19 +1,37 @@
+<%@page import="java.text.DecimalFormatSymbols"%>
+<%@page import="model.*"%>
+<%@page import="java.sql.Date" %>
+<%@page import="java.text.SimpleDateFormat" %>
+<%@page import="java.text.DecimalFormat" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%
+        Dashboard[] totalMontant =  (Dashboard[])request.getAttribute("totalMontant");
+        Dashboard[] ontantdevisannee =  (Dashboard[])request.getAttribute("devisannee");
+        Dashboard[] ontantdevismois =  (Dashboard[])request.getAttribute("devismois");
 
-<%@page import="java.util.Arrays"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="model.User"%>
-<% 
-        User user = (User) session.getAttribute("user");
-    
-        List<String> labels = Arrays.asList("Janvier", "Fevrier", "Mars", "Avril", "Mail", "Juin");
-        List<Integer> data = Arrays.asList(20, 30, 25, 150, 10, 13);
-        
-        String labelsArray = Arrays.toString(labels.toArray());
-        labelsArray = labelsArray.substring(1, labelsArray.length() - 1); // Supprimer les crochets
-        
-        labelsArray = "['" + labelsArray.replaceAll(", ", "','") + "']";
-        String dataArray = Arrays.toString(data.toArray());
+        // Créer des tableaux pour stocker les labels et les données
+        String[] labels = new String[ontantdevismois.length];
+        double[] data = new double[ontantdevismois.length];
+
+        double[] labelsAnnee = new double[ontantdevisannee.length];
+        double[] dataAnnee = new double[ontantdevisannee.length];
+
+        // Boucle à travers le tableau d'objets
+        for (int i = 0; i < ontantdevismois.length; i++) {
+            // Ajouter le month_name à labels
+            labels[i] = ontantdevismois[i].getMonthName();
+            // Ajouter le montanttotal à data
+            data[i] = ontantdevismois[i].getMontantTotal();
+        }
+        // Boucle à travers le tableau d'objets
+        for (int i = 0; i < ontantdevisannee.length; i++) {
+            // Ajouter le month_name à labels
+            labelsAnnee[i] = ontantdevisannee[i].getYear();
+            // Ajouter le montanttotal à data
+            dataAnnee[i] = ontantdevisannee[i].getMontantTotal();
+        }
+
+
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +39,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggest words</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styleSidebar.css">
     <link href='${pageContext.request.contextPath}/assets/css/boxicons.min.css' rel='stylesheet'>
-    <title>Chart-statistic</title>
+    <title>Tableau De bord</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/chart.css">
 </head>
 
@@ -35,41 +54,18 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="#">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="link_name">Dashboard</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Category</a></li>
-                </ul>
-            </li>
-            <li>
                 <div class="iocn-link">
-                    <a href="#">
-                        <i class='bx bx-collection'></i>
-                        <span class="link_name">Category</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Category</a></li>
-                    <li><a href="#">HTML & CSS</a></li>
-                    <li><a href="#">JavaScript</a></li>
-                    <li><a href="#">PHP & MySQL</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="iocn-link">
-                    <a href="#">
+                    <a href="listDevisAdmin">
                         <i class='bx bx-book-alt'></i>
-                        <span class="link_name">Auth</span>
+                        <span class="link_name">Devis En Cours</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Auth</a></li>
-                    <li><a href="auth/admin">Login Admin</a></li>
-                    <li><a href="auth/user">Login User</a></li>
+                    <li><a class="link_name" href="listDevisAdmin">Devis En Cours</a></li>
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Login Form</a></li>
+                    <li><a href="#">Card Design</a></li>
                 </ul>
             </li>
             <li>
@@ -82,54 +78,12 @@
                 </ul>
             </li>
             <li>
-                <a href="#">
+                <a href="admin">
                     <i class='bx bx-line-chart'></i>
                     <span class="link_name">Chart</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Chart</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="iocn-link">
-                    <a href="#">
-                        <i class='bx bx-plug'></i>
-                        <span class="link_name">Plugins</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Plugins</a></li>
-                    <li><a href="#">UI Face</a></li>
-                    <li><a href="#">Pigments</a></li>
-                    <li><a href="#">Box Icons</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-compass'></i>
-                    <span class="link_name">Explore</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Explore</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-history'></i>
-                    <span class="link_name">History</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">History</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cog'></i>
-                    <span class="link_name">Setting</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Setting</a></li>
+                    <li><a class="link_name" href="admin">Chart</a></li>
                 </ul>
             </li>
             <li>
@@ -138,7 +92,7 @@
                         <img src="${pageContext.request.contextPath}/assets/img/our.png" alt="profileImg">
                     </div>
                     <div class="name-job">
-                        <div class="profile_name">Feno Randria</div>
+                        <div class="profile_name">Admin </div>
                         <div class="job">Developper</div>
                     </div>
                     <i class='bx bx-log-out'></i>
@@ -157,37 +111,28 @@
                     </div>
                     <nav>
                         <div class="menuNav">
-                            <ul>
+                            <%-- <ul>
                                 <li><a href="#" class="">Home</a></li>
-                                <li><a href="tableau" class="">tableau</a></li>
-                                <li><a href="list" class="">List</a></li>
+                                <li><a href=".Client/tableau.html" class="">tableau</a></li>
+                                <li><a href=".Client/list.html" class="">List</a></li>
                                 <li><a href="#" class="actif">Chart</a></li>
-                                <li><a href="formulaire" class="">Formulaire</a></li>
-                            </ul>
+                                <li><a href="save.html" class="">Formulaire</a></li>
+                            </ul> --%>
                         </div>
-                        <div class="recherche">
-                            <form action="../page/resultatRecherche.html" method="get">
-                                <input type="text" name="" id="search" placeholder="Votre Recherche" />
-                                <button>
-                                    <img src="${pageContext.request.contextPath}/assets/img/btnSearchnoneFOnd.png" alt="">
-                                </button>
-                            </form>
-                        </div>
+                       
                         <div class="profilOUt">
                             <div class="profil">
                                 <div class="imageProfile">
-                                    <img src="${pageContext.request.contextPath}/assets/img/me.jpeg" alt="">
+                                    <img src="${pageContext.request.contextPath}/assets/img/our.jpeg" alt="">
                                 </div>
                                 <div class="infoProfile">
-                                    <h3>
-                                       <% if(user!=null) out.print(user.getNom()); %>
-                                    </h3>
+                                    <h3>Admin</h3>
                                     <p>4.674.00 Point</p>
                                 </div>
                             </div>
                             <div class="logOut">
                                 <div class="texte">
-                                    <a href="#">Log Out</a>
+                                    <a href="logOut">Log Out</a>
                                 </div>
                                 <div class="img">
                                     <img src="${pageContext.request.contextPath}/assets/img/logOut.png" alt="">
@@ -199,49 +144,39 @@
                 <h3 class="title ">Chart</h3>
                 <section class="chart">
                     <div class="chartCheese">
-                        <canvas id="pieChart" width="400" height="400"></canvas>
-                        <script src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
-                        <script>
-                            var ctx = document.getElementById('pieChart').getContext('2d');
-                            var pieChart = new Chart(ctx, {
-                                type: 'pie',
-                                data: {
-//                                    labels: ['Janvier', 'Fevrier', 'Mars', 'Avril', 'Mai', 'Juin'],
-                                    labels: <%= labelsArray %>,
-                                    datasets: [{
-//                                        data: [20, 30, 25, 15, 10, 13],
-                                        data: <%= dataArray %>,
-                                        backgroundColor: ['red', 'green', 'blue', 'yellow', 'orange', 'violet']
-                                    }]
-                                }
-                            });
-                        </script>
+                        <div class="Total">
+                            <h3>montant total des devis:</h3>
+                            <h1>
+                                <%= totalMontant[0].getSommemontant() %> Ariary
+                            </h1>
+                        </div>
                     </div>
                     <div class="chartBatton">
                         <canvas id="barChart" width="400" height="400"></canvas>
                         <script src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
                         <script>
-                            var ctx = document.getElementById('barChart').getContext('2d');
-                            var barChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: ['A', 'B', 'C', 'D', 'E'],
-                                    datasets: [{
-                                        label: 'Scores',
-                                        data: [70, 85, 60, 90, 75],
-                                        backgroundColor: 'orange',
-                                        borderColor: 'black',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
+                         var ctx = document.getElementById('barChart').getContext('2d');
+                        var barChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: [<% for (int i = 0; i < labels.length; i++) { %>'<%= labels[i] %>'<% if (i < labels.length - 1) { %>,<% } %> <% } %>],
+                                datasets: [{
+                                    label: 'Devis Mois',
+                                    data: [<% for (int i = 0; i < data.length; i++) { %><%= data[i] %><% if (i < data.length - 1) { %>,<% } %> <% } %>],
+                                    backgroundColor: 'orange',
+                                    borderColor: 'black',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
                                     }
                                 }
-                            });
+                            }
+                        });
+
                         </script>
                     </div>
                     <div class="chartCourbe">
@@ -252,12 +187,10 @@
                             var lineChart = new Chart(ctx, {
                                 type: 'line',
                                 data: {
-//                                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                                      labels: <%= labelsArray %>,
-                                    datasets: [{
-                                        label: 'Sales',
-//                                        data: [100, 150, 200, 250, 300, 350],
-                                          data: <%= dataArray %>,
+                                labels: [<% for (int i = 0; i < labelsAnnee.length; i++) { %>'<%= labelsAnnee[i] %>'<% if (i < labelsAnnee.length - 1) { %>,<% } %> <% } %>],
+                                datasets: [{
+                                    label: 'Devis Annee',
+                                    data: [<% for (int i = 0; i < dataAnnee.length; i++) { %><%= dataAnnee[i] %><% if (i < dataAnnee.length - 1) { %>,<% } %> <% } %>],
                                         borderColor: 'blue',
                                         borderWidth: 1
                                     }]
