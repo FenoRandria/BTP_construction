@@ -234,3 +234,38 @@ FROM
 GROUP BY 
     EXTRACT(YEAR FROM dateDebut)
 ORDER BY year;
+
+
+
+
+-- --------------------------------------------------------------------------------------
+-- JOUR 2 EVALUATION ---------------------------------------------------------------------------
+CREATE TABLE Import_maison_travaux (
+    travaux_type_maison VARCHAR(30) NOT NULL,
+    travaux_maison_descrit VARCHAR(200) NOT NULL,
+    travaux_maison_surf numeric(20,2) default 0 NOT NULL,
+    travaux_code int default 0 NOT NULL,
+    travaux_type text not null default 'aucune',
+    travaux_unite VARCHAR(30) NOT NULL,
+    travaux_maison_pu numeric(20,2) default 0 NOT NULL,
+    travaux_maison_quantite numeric(20,2) default 0 NOT NULL,
+    travaux_duree numeric(20,2) default 0 NOT NULL
+);
+
+create table Import_devis (
+    devis_client_num VARCHAR(50) NOT NULL,
+    devis_refs  VARCHAR(50) NOT NULL,
+    devis_type_maison VARCHAR(30) NOT NULL,
+    devis_type_finition VARCHAR(30) NOT NULL,
+    devis_taux_finition numeric(20,2),
+    devis_date DATE default now() not null,
+    devis_dateDebut DATE default now() not null,
+    devis_lieu VARCHAR(50) NOT NULL
+);
+
+create table Import_paiement (
+    devis_refs  VARCHAR(50) NOT NULL,
+    paiement_refs VARCHAR(50) NOT NULL,
+    paiement_date DATE default now() not null,
+    paiement_montant numeric(20,2) not null
+);

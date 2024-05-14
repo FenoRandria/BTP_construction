@@ -58,39 +58,49 @@
             <span class="logo_name">Evaluation</span>
         </div>
         <ul class="nav-links">
+
+            <li>
+                <a href="dashboard">
+                    <i class='bx bx-line-chart'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="dashboard">Dashboard</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="devis-en-cours">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Devis En Cours</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="devis-en-cours">Devis En Cours</a></li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="import-data-file">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Import Data</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="import-data-file">Devis En Cours</a></li>
+                </ul>
+            </li>
             <li>
                 <div class="iocn-link">
-                    <a href="listDevisAdmin">
-                        <i class='bx bx-book-alt'></i>
-                        <span class="link_name">Devis En Cours</span>
+                    <a href="import-data-file">
+                        <i class='bx bx-collection'></i>
+                        <span class="link_name">Import Data</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="listDevisAdmin">Devis En Cours</a></li>
-                    <li><a href="#">Web Design</a></li>
-                    <li><a href="#">Login Form</a></li>
-                    <li><a href="#">Card Design</a></li>
+                    <li><a class="link_name" href="import-data-file">Data Maison-Travaux</a></li>
+                    <li><a href="import-data-paiement">Data Paiement</a></li>
                 </ul>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="link_name">Analytics</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Analytics</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="admin">
-                    <i class='bx bx-line-chart'></i>
-                    <span class="link_name">Chart</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="admin">Chart</a></li>
-                </ul>
-            </li>
+            
             <li>
                 <div class="profile-details">
                     <div class="profile-content">
