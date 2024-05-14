@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/D:/S6/BTP_construction/src/java/controller/auth/AuthController.java</file>
+            <file>file:/D:/S6/BTP_construction/src/java/dao/GenericDao.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Client/devis-details.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/controller/users/ActivityUserController.java</file>
+            <file>file:/D:/S6/BTP_construction/src/java/model/Dashboard.java</file>
+            <file>file:/D:/S6/BTP_construction/src/java/model/User.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/auth/login-admin.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/model/V_DetailDevisMaison.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/dashboard.jsp</file>
+        </group>
+    </open-files>
+</project-private>

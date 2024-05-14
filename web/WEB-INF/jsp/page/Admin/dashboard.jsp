@@ -33,6 +33,11 @@
 
 
 %>
+<% 
+    DecimalFormat formatNumber = new DecimalFormat("#,##0.00"); 
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,40 +111,7 @@
             <div id="page">
                 <!-- ----------------------Code taloha------------------------- -->
                 <header>
-                    <div class="logo">
-                        <img src="${pageContext.request.contextPath}/assets/img/logoWhite.png" alt="" />
-                    </div>
-                    <nav>
-                        <div class="menuNav">
-                            <%-- <ul>
-                                <li><a href="#" class="">Home</a></li>
-                                <li><a href=".Client/tableau.html" class="">tableau</a></li>
-                                <li><a href=".Client/list.html" class="">List</a></li>
-                                <li><a href="#" class="actif">Chart</a></li>
-                                <li><a href="save.html" class="">Formulaire</a></li>
-                            </ul> --%>
-                        </div>
-                       
-                        <div class="profilOUt">
-                            <div class="profil">
-                                <div class="imageProfile">
-                                    <img src="${pageContext.request.contextPath}/assets/img/our.jpeg" alt="">
-                                </div>
-                                <div class="infoProfile">
-                                    <h3>Admin</h3>
-                                    <p>4.674.00 Point</p>
-                                </div>
-                            </div>
-                            <div class="logOut">
-                                <div class="texte">
-                                    <a href="logOut">Log Out</a>
-                                </div>
-                                <div class="img">
-                                    <img src="${pageContext.request.contextPath}/assets/img/logOut.png" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
+
                 </header>
                 <h3 class="title ">Chart</h3>
                 <section class="chart">
@@ -147,7 +119,8 @@
                         <div class="Total">
                             <h3>montant total des devis:</h3>
                             <h1>
-                                <%= totalMontant[0].getSommemontant() %> Ariary
+                                <%= formatNumber.format(totalMontant[0].getSommemontant()) %>
+                                 Ariary
                             </h1>
                         </div>
                     </div>
@@ -163,7 +136,7 @@
                                 datasets: [{
                                     label: 'Devis Mois',
                                     data: [<% for (int i = 0; i < data.length; i++) { %><%= data[i] %><% if (i < data.length - 1) { %>,<% } %> <% } %>],
-                                    backgroundColor: 'orange',
+                                    backgroundColor: 'blue',
                                     borderColor: 'black',
                                     borderWidth: 1
                                 }]

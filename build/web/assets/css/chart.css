@@ -241,4 +241,19 @@ main h3 {
 .chart div {
   width: 30%;
   height: 500px;
+}
+.chart .Total {
+  width: 100%;
+  height: auto;
+  color: white;
+}
+.chart .Total h3 {
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 1rem;
+}
+.chart .Total h1 {
+  font-size: 3rem;
+  width: 100%;
+  font-weight: 700;
 }/*# sourceMappingURL=chart.css.map */

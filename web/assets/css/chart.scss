@@ -254,16 +254,19 @@ header {
         }
     }
 }
-.title{
+
+.title {
     color: white;
     text-align: center;
     font-size: 4rem;
 }
-main{
-    h3{
+
+main {
+    h3 {
         color: white;
     }
 }
+
 .chart {
     width: 90%;
     height: 700px;
@@ -273,8 +276,30 @@ main{
     gap: 40px;
     justify-content: space-between;
 
-    div{
+    div {
+        
         width: 30%;
         height: 500px;
     }
+
+    .Total {
+
+        width: 100%;
+        height: auto;
+        color: white;
+
+        h3 {
+            text-transform: uppercase;
+            font-weight: 200;
+            font-size: 1rem;
+        }
+        h1 {
+
+            font-size: 3rem;
+            width: 100%;
+            font-weight: 700;
+        }
+
+    }
+
 }
