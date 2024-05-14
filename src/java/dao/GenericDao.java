@@ -722,7 +722,9 @@ public List<List<String>> tableToListString(String nameTable, Connection con) th
         System.out.println("sql :"+queryBuilder.toString());
         
             
-        return statement.execute(queryBuilder.toString());
+//        return statement.execute(queryBuilder.toString());        
+        return true;
+
         
    }
 }
