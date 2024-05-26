@@ -1,3 +1,4 @@
+<%@page import="model.V_detailDevis"%>
 <%@page import="model.Devis"%>
 <%@page import="java.util.List"%>
 <%@page import="model.User"%>
@@ -5,9 +6,10 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@page pageEncoding="UTF-8" %>
 <% 
     User user = (User) session.getAttribute("user");
-    List<Devis> devis = (List<Devis>) request.getAttribute("devis");
+    List<V_detailDevis> devis = (List<V_detailDevis>) request.getAttribute("devis");
     
 %>
 <!DOCTYPE html>
@@ -137,7 +139,7 @@
                     
                     <% if(devis!=null) { %>
                         <% for(int i = 0; i< devis.size(); i++) { %>
-                            <% Devis dev = (Devis) devis.get(i); %>
+                            <% V_detailDevis dev = (V_detailDevis) devis.get(i); %>
                             <!----------------/Produit anakiray--------------->
                             <div class="fichierTwo">
                                 <div class="image_produit">
@@ -158,15 +160,21 @@
                                 </div>
                                 <div class="prix">
                                     <div id="descriptions">
-                                        <h4>Devis: <span><%= dev.getId() %></span></h4>
-                                        <h4>Montant: <span><%= formatNumber.format(dev.getMontant())%></span></h4>
-                                        <h4>Reste Ã  payer : <span><%= formatNumber.format(dev.getMontant())%></span></h4>
-                                        <h4>Maison de Type: <span><%= dev.getIdTypeMaison() %></span></h4>
+                                        <h4>Devis: <span><%= dev.getIdDevis()%></span></h4>
+                                        <h4>Maison de Type: <span><%= dev.getMaisonNom()%></span></h4>
+                                        <h4>Durée construction: <span><%= dev.getDuree()%> j</span></h4>
+                                        <h4>Montant: <span><%= formatNumber.format(dev.getDevisMontant())%></span></h4>
+                                        <h4>Reste Ã  payer : <span><%= formatNumber.format(dev.getRestePayer())%></span></h4>
                                         <p>Debut de Projet : <%= dateFormat.format(new java.util.Date(dev.getDateDebut().getTime()))%></p>
+                                        <p>Fin de Projet : <%= dateFormat.format(new java.util.Date(dev.getDateFin().getTime()))%></p>
+                                        <p>Paiement effectué: (<%= formatNumber.format(dev.getProgression())%>%)</p>
+                                        
                                     </div>
 
-                                    <a href="devis-details?devis=<%= dev.getId() %>" class="buttonProduit">Detailer</a>
-                                    <a href="devis-paiement?devis=<%= dev.getId() %>" style="background-color:#005b85" class="buttonProduit">Payer</a>
+                                    <a href="devis-details?devis=<%= dev.getIdDevis() %>" class="buttonProduit">Detailer</a>
+                                    <% if(dev.getRestePayer()>0.0) { %> <a href="devis-paiement?devis=<%= dev.getIdDevis() %>" style="background-color:#005b85" class="buttonProduit">Payer</a><% } %>
+                                    <% if(dev.getRestePayer()<=0.0) { %> <a href="" style="background-color:#4bd700" class="buttonProduit">Payement finis</a><% } %>
+
                                 </div>
                             </div>
                         <% } %>

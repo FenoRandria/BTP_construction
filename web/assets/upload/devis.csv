@@ -1,3 +1,2 @@
-type_maison,description,surface,code_travaux,type_travaux,unité,prix_unitaire,quantite,duree_travaux
-TOKYO,"2 chambres, 1 living, 1 salle de bain",128,102,beton armée dosée à 350kg/m3,m3,"573215,8","18,4",90
-TOKYO,"2 chambres, 1 living, 1 salle de bain",128,103,Armature pour Béton,kg,8500,781,90
+client,ref_devis,type_maison,finition,taux_finition,date_devis,date_debut,lieu
+0340590098,D001,TOKYO,Gold,"6,45%",22/12/2023,10/01/2024,Imerintsiatosika

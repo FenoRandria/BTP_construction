@@ -21,10 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Devis;
+import model.Paiement;
 import model.TypeFinition;
 import model.TypeMaison;
 import model.User;
 import model.V_DetailDevisMaison;
+import model.V_detailDevis;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,7 +51,8 @@ public class ActivityUserController {
             try {
                 GenericDao gen = new GenericDao();
                 Connection con = new ConnectionDB().getConnection("postgres");
-                List<Devis> devis = (List<Devis>) gen.find(new Devis(), con);
+                List<V_detailDevis> devis = (List<V_detailDevis>) gen.executeQueryGeneral(new V_detailDevis(), "select * from v_detailDevis where idUser="+user.getId(), con);
+                
                 model.addAttribute("devis", devis);
                 con.close();
                 return "page/Client/devis-liste";
@@ -199,6 +202,9 @@ public class ActivityUserController {
                devis =(Devis) gen.find(devis,con).get(0);
                if(devis.getIdUser()!=user.getId()) return "redirect:/devis?error=userInconnu";
                List<V_DetailDevisMaison> listDetails = (List<V_DetailDevisMaison>) gen.executeQueryGeneral(vd, "select * from V_DetailDevisMaison where idDevis = "+idDevis, con);
+               List<Paiement> listPaiements = (List<Paiement>) new Paiement().findPaymentDevis(String.valueOf(idDevis));
+                     
+               model.addAttribute("paiements", listPaiements);
                model.addAttribute("detailsdevis", listDetails);
                return "page/Client/devis-details";           
             }catch(Exception e){
@@ -253,20 +259,30 @@ public class ActivityUserController {
         String montant = (req.getParameter("montant") != null && !req.getParameter("montant").trim().isEmpty()) ? req.getParameter("montant") : null;
         int idDevis = (req.getParameter("idDevis") != null && !req.getParameter("idDevis").trim().isEmpty()) ? Integer.valueOf(req.getParameter("idDevis")) : 0;
         
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date datePaiementtype = null;
         
         boolean success = true;
         double montantDouble = 0.0;
+
+        
         if (montant == null) {
             OutilsFormat.addMessage(messages, false, "errorMontant", "Montant Invalide!");
             success = false;
         }else {
             
             try {
+                montant = montant.replace(",", ".");
                 BigDecimal montantDecimal = new BigDecimal(montant);
                 montantDouble = montantDecimal.doubleValue();
-            } catch (NumberFormatException e) {
+                Devis devis = (Devis) new GenericDao().find(new Devis(idDevis), null).get(0);
+                
+                if (montantDouble > devis.getMontant() || montantDouble <= 0) {
+                    OutilsFormat.addMessage(messages, false, "errorMontant", "Montant depasse ou inferieur le montant de devis!");
+                    success = false;
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
                 OutilsFormat.addMessage(messages, false, "errorMontant", "Montant Invalide!");
             }
@@ -279,7 +295,7 @@ public class ActivityUserController {
             try {
                 java.util.Date date = sdf.parse(datePaiement);
                 datePaiementtype = new java.sql.Date(date.getTime());
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 OutilsFormat.addMessage(messages, false, "errorDatePaiement", "Date Invalide!");
                 success = false;
             }

@@ -3,15 +3,32 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/S6/BTP_construction/src/java/controller/auth/AuthController.java</file>
-            <file>file:/D:/S6/BTP_construction/src/java/dao/GenericDao.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/travaux-update.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/model/Import_paiement.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/importDataCsv.jsp</file>
             <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Client/devis-details.jsp</file>
-            <file>file:/D:/S6/BTP_construction/src/java/controller/users/ActivityUserController.java</file>
-            <file>file:/D:/S6/BTP_construction/src/java/model/Dashboard.java</file>
-            <file>file:/D:/S6/BTP_construction/src/java/model/User.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/applicationContext.xml</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/finition-update.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Client/devis-formulaire.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/controller/CleanDataController.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/devis-encours.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/model/Paiement.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/paiementImportCsv.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/dispatcher-servlet.xml</file>
+            <file>file:/D:/S6/BTP_construction/src/java/controller/admin/ActivityAdminController.java</file>
+            <file>file:/D:/S6/BTP_construction/src/java/service/ImportDataCSV.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Client/devis-paiement.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/detailDevisMaison.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/devis-details-admin.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/web.xml</file>
             <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/auth/login-admin.jsp</file>
-            <file>file:/D:/S6/BTP_construction/src/java/model/V_DetailDevisMaison.java</file>
             <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/dashboard.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/finition.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/index.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/auth/inscrire-user.jsp</file>
+            <file>file:/D:/S6/BTP_construction/src/java/controller/auth/AuthController.java</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Admin/type-finition.jsp</file>
+            <file>file:/D:/S6/BTP_construction/web/WEB-INF/jsp/page/Client/devis-liste.jsp</file>
         </group>
     </open-files>
 </project-private>

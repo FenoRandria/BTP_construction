@@ -76,10 +76,11 @@ create table typeMaison(
     nom varchar(255),
     descriptions text not null default 'aucune',
     photos varchar(255) not null,
-    nbJourConstruction numeric(3,2),
+    nbJourConstruction numeric(13,2),
     corbeille int default 0,
     createdAt TIMESTAMP DEFAULT NOW()
 );
+-- alter table typeMaison set surface numeric(10,2);
 
 -- Insert 1: Modern house
 INSERT INTO typeMaison (nom, descriptions, photos, nbJourConstruction) VALUES 
@@ -95,8 +96,8 @@ INSERT INTO typeMaison (nom, descriptions, photos, nbJourConstruction) VALUES
 create table detailDevisMaison(
     id serial primary key not null,
     descriptions text not null default 'aucune',
-    prixUnitaire numeric(9,2) not null,
-    quantite numeric(9,2) not null,
+    prixUnitaire numeric(20,2) not null,
+    quantite numeric(20,2) not null,
     unite varchar(10),
     idTypeMaison int REFERENCES typeMaison(id) not null,
     corbeille int default 0,
@@ -182,7 +183,7 @@ create table paiement(
 
 INSERT INTO payment (idDevis, montant, datePayment) VALUES
 (1, 500.00, '2024-05-14 08:30:00');
-(2, 750.75, '2024-05-11 10:00:00');
+(2, 750.75, '2024-05-11 10:00:00');
 
 
 insert into users (numero) values ('0345137423') returning *
@@ -269,3 +270,212 @@ create table Import_paiement (
     paiement_date DATE default now() not null,
     paiement_montant numeric(20,2) not null
 );
+
+
+-- -----------------------------------------------debut requete necessaire insert typemaison from import data -----------------------------------
+--1)
+insert into typeMaison (nom,descriptions,surface,nbJourConstruction) 
+select 
+    distinct travaux_type_maison,
+    travaux_maison_descrit,
+    travaux_maison_surf,
+    travaux_duree
+from Import_maison_travaux;
+
+
+
+-- select 
+--     distinct travaux_code,
+--     travaux_type,
+--     travaux_unite,
+--     travaux_maison_pu,
+--     travaux_maison_quantite,
+--     typeMaison.id
+-- from Import_maison_travaux
+-- join typeMaison on typeMaison.nom = Import_maison_travaux.travaux_type_maison
+
+-- ----------------------------------------------- fin requete necessaire insert  from import data -----------------------------------
+
+
+-- -----------------------------------------------debut requete necessaire insert detailDevisMaison from import data -----------------------------------
+
+--2)
+insert into detailDevisMaison (code, descriptions, quantite, prixUnitaire, unite, ?1? )
+select 
+    distinct travaux_code,
+    travaux_type,
+    travaux_unite,
+    travaux_maison_pu,
+    travaux_maison_quantite,
+    typeMaison.id
+from Import_maison_travaux
+join typeMaison on typeMaison.nom = Import_maison_travaux.travaux_type_maison;
+
+-- ----------------------------------------------- fin requete necessaire insert detailDevisMaison from import data -----------------------------------
+
+-- -----------------------------------------------debut requete necessaire insert users from import data -----------------------------------
+--3)
+insert into users (numero)
+select 
+    distinct devis_client_num
+from Import_devis;
+
+-- ----------------------------------------------- fin requete necessaire insert users from import data -----------------------------------
+
+
+-- -----------------------------------------------debut requete necessaire insert typeFinition from import data -----------------------------------
+--4)
+insert into typeFinition (typeFinition,pourcentage)
+select 
+    distinct devis_type_finition,
+    devis_taux_finition
+from Import_devis;
+
+-- ----------------------------------------------- fin requete necessaire insert detailDevisMaison from import data -----------------------------------
+
+
+-- -----------------------------------------------debut requete necessaire insert Devis from import data -----------------------------------
+--5)
+insert into devis (reference,iduser, descriptions,idtypefinition,idtypemaison,datedebut,datefin,montant,pourcentagefinition,createdAt) 
+SELECT
+    DISTINCT
+    d.devis_refs,
+    u.id AS iduser,
+    d.devis_lieu,
+    tf.id AS idTypeFinition,
+    tm.id AS idTypeMaison,
+    d.devis_dateDebut,
+    (d.devis_dateDebut::DATE + (tm.nbjourconstruction * INTERVAL '1 day')) AS datefin,
+    (SUM(ddm.quantite * ddm.prixunitaire) * tf.pourcentage) AS montant,
+    tf.pourcentage AS pourcentage,
+    d.devis_date
+FROM
+    Import_devis d
+    LEFT JOIN users u ON u.numero = d.devis_client_num
+    LEFT JOIN typeFinition tf ON tf.typeFinition = d.devis_type_finition
+    LEFT JOIN typeMaison tm ON tm.nom = d.devis_type_maison
+    LEFT JOIN detaildevismaison ddm ON ddm.idtypemaison = tm.id
+GROUP BY
+    u.id, d.devis_refs, d.devis_lieu, tf.id, tm.id, d.devis_dateDebut, d.devis_date, tm.nbjourconstruction, tf.pourcentage;
+
+-- ----------------------------------------------- fin requete necessaire insert Devis from import data -----------------------------------
+
+
+-- -----------------------------------------------debut requete necessaire insert paiement from import data -----------------------------------
+--6)
+INSERT INTO paiement (idDevis,reference, montant, datePayment) VALUES
+select 
+    devis.id,
+    paiement_refs,
+    paiement_montant,
+    paiement_date
+from Import_paiement , devis where devis.reference = Import_paiement.devis_refs;
+
+-- ----------------------------------------------- fin requete necessaire insert paiement from import data -----------------------------------
+create table Import_paiement (
+    devis_refs  VARCHAR(50) NOT NULL,
+    paiement_refs VARCHAR(50) NOT NULL,
+    paiement_date DATE default now() not null,
+    paiement_montant numeric(20,2) not null
+);
+
+
+
+
+
+truncate paiement,Import_paiement,
+
+
+
+
+
+
+-- ------------------------ montant deja effectuer ------------------------------------
+create or replace view v_montantEffectuer as
+select iddevis, COALESCE(sum(montant), 0.00) as montantPaiement from paiement group by iddevis;
+
+select * from v_montantEffectuer;
+
+-- ------------------------ montant deja effectuer join devis ------------------------------------
+
+ 
+create table typeFinition(
+    id serial primary key not null,
+    typeFinition varchar(255) not null,
+    pourcentage numeric(10,2) not null,
+    createdAt TIMESTAMP DEFAULT NOW()
+);
+
+create table typeMaison(
+    id serial primary key not null,
+    nom varchar(255),
+    descriptions text not null default 'aucune',
+    photos varchar(255) not null,
+    nbJourConstruction numeric(13,2),
+    corbeille int default 0,
+    createdAt TIMESTAMP DEFAULT NOW()
+);
+
+create or replace view v_detailDevis as
+select 
+    d.id as idDevis,
+    d.idUser,
+    d.descriptions devisDescriptions,
+    d.idTypeFinition,
+    d.idTypeMaison,
+    d.dateDebut,
+    d.dateFin,
+    d.pourcentageFinition, 
+    d.etatDevis,
+    d.corbeille as devisCorbeille,
+    d.createdAt as datedevis,
+    tm.nom as maisonNom,
+    tm.descriptions as maisonDescriptions,
+    tm.photos as maisonPhotos,
+    tm.nbJourConstruction as duree,
+    tm.corbeille as maisonCorbeille,
+    tm.createdAt as datetypemaison,
+    tf.createdAt as datefinition,
+    d.montant as devisMontant,
+    vme.montantPaiement,
+    (d.montant - COALESCE(vme.montantPaiement,0.00)) as restePayer,
+    ((vme.montantPaiement*100)/d.montant) as progression
+from devis d 
+join typeMaison  tm on d.idTypeMaison = tm.id
+join typeFinition  tf on d.idtypefinition = tf.id
+left join v_montantEffectuer vme on vme.iddevis = d.id;
+
+
+
+
+create or replace view devisdetails as
+SELECT 
+    devis.id AS idDevis,
+    iduser,
+    devis.descriptions AS descriptionDevis,
+    typeFinition.typefinition,
+    typeFinition.id AS idTypeFinition,
+    typemaison.descriptions AS descriptionMaison,
+    datedebut,
+    datefin,
+    devis.montant AS montantDevis,
+    pourcentagefinition,
+    (devis.montant - COALESCE(sommemontant, 0)) AS resteapayer
+FROM 
+    devis
+JOIN 
+    typeFinition ON typeFinition.id = devis.idTypeFinition
+JOIN 
+    typeMaison ON typeMaison.id = devis.idTypeMaison
+LEFT JOIN 
+    paymentsomme ON paymentsomme.iddevis = devis.id;
+
+-- ---------------------------------------------------------
+create or replace view v_totalPaiement as
+select iddevis,sum(montant) as totalPaiement from paiement group by iddevis;
+
+select * from v_totalPaiement;
+
+"Truncate paiement,devis,typemaison,import_devis,import_maison_travaux,import_paiement,typefinition,users; " +
+                       "INSERT INTO users (nom, mail, numero, mdp) " +
+                       "VALUES ('Admin', 'admin@gmail.com', '0341129612', '123');";

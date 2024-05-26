@@ -48,12 +48,12 @@ public class AuthController {
     
     @RequestMapping(value = "/admin")
     public String loginPageAdmin(Model model, HttpServletRequest req) {
-//        return "page/auth/login-admin";  
-        Dashboard dash = new Dashboard();
-        model.addAttribute("totalMontant",dash.sommeTotalMontant());
-        model.addAttribute("devisannee",dash.findmontantdevisannee());
-        model.addAttribute("devismois",dash.findmontantdevismois());
-        return "page/Admin/dashboard";
+        return "page/auth/login-admin";  
+//        Dashboard dash = new Dashboard();
+//        model.addAttribute("totalMontant",dash.sommeTotalMontant());
+//        model.addAttribute("devisannee",dash.findmontantdevisannee());
+//        model.addAttribute("devismois",dash.findmontantdevismois());
+//        return "page/Admin/dashboard";
 
     }
     
@@ -90,7 +90,7 @@ public class AuthController {
                     con.close();
                     if(user.getMail()!="")
                     {
-                        OutilsFormat.addMessage(messages, true, "success", "/gestion-places");
+                        OutilsFormat.addMessage(messages, true, "success", "/dashboard");
                     } else {
                         OutilsFormat.addMessage(messages, false, "error", "vous n'avez pas d'accès");
                     }

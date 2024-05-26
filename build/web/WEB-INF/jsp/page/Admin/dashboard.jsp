@@ -3,19 +3,22 @@
 <%@page import="java.sql.Date" %>
 <%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.text.DecimalFormat" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@page pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+
 <%
         Dashboard[] totalMontant =  (Dashboard[])request.getAttribute("totalMontant");
         Dashboard[] ontantdevisannee =  (Dashboard[])request.getAttribute("devisannee");
         Dashboard[] ontantdevismois =  (Dashboard[])request.getAttribute("devismois");
+        int[] yearExistant =  (int[]) request.getAttribute("yearExistant");
 
         // Créer des tableaux pour stocker les labels et les données
         String[] labels = new String[ontantdevismois.length];
         double[] data = new double[ontantdevismois.length];
-
+        
         double[] labelsAnnee = new double[ontantdevisannee.length];
         double[] dataAnnee = new double[ontantdevisannee.length];
-
+        
         // Boucle à travers le tableau d'objets
         for (int i = 0; i < ontantdevismois.length; i++) {
             // Ajouter le month_name à labels
@@ -30,13 +33,18 @@
             // Ajouter le montanttotal à data
             dataAnnee[i] = ontantdevisannee[i].getMontantTotal();
         }
-
+        double paiementTotal = new Dashboard().getTotalMontantPaiement();
+        
+        
+        
+        
 
 %>
 <% 
     DecimalFormat formatNumber = new DecimalFormat("#,##0.00"); 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,36 +76,50 @@
                     <li><a class="link_name" href="dashboard">Dashboard</a></li>
                 </ul>
             </li>
+            
             <li>
-                <a href="devis-en-cours">
+                <a href="devis-encours">
                     <i class='bx bx-pie-chart-alt-2'></i>
                     <span class="link_name">Devis En Cours</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="devis-en-cours">Devis En Cours</a></li>
+                    <li><a class="link_name" href="devis-encours">Devis En Cours</a></li>
                 </ul>
             </li>
             
-            <li>
-                <a href="import-data-file">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="link_name">Import Data</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="import-data-file">Devis En Cours</a></li>
-                </ul>
-            </li>
+          
             <li>
                 <div class="iocn-link">
-                    <a href="import-data-file">
-                        <i class='bx bx-collection'></i>
+                    <a href="#">
+                        <i class='bx bx-book-alt'></i>
                         <span class="link_name">Import Data</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="import-data-file">Data Maison-Travaux</a></li>
-                    <li><a href="import-data-paiement">Data Paiement</a></li>
+                    <li><a class="link_name" href="#">Import Data</a></li>
+                    <li><a href="import-data-file">Maison-Travaux</a></li>
+                    <li><a href="import-paiement">Paiement</a></li>
+                </ul>
+            </li>
+           
+            <li>
+                <a href="travaux">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Gestion Travaux</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="travaux">Gestion Travaux</a></li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="finition">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Gestion Finition</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="finition">Gestion Finition</a></li>
                 </ul>
             </li>
             
@@ -123,16 +145,53 @@
                 <header>
 
                 </header>
+                <a style="color:white" href="refresh-table">refresh base</a>
                 <h3 class="title ">Chart</h3>
                 <section class="chart">
                     <div class="chartCheese">
+                        
+                         <!-- todo jour 2 -->  
+                        <!-- **********************************************************************-->
+
+                        <form action="adminYears" method="post">
+                            <% if(request.getAttribute("yartCheck") != null) { %>
+                                <span><label for="year">Annee selected: <%= request.getAttribute("yartCheck") %></label></span>
+                            <% }else{ %>
+                                <span><label for="year">Choisir annee: </label></span>
+                            <% } %>
+                            <span>
+                                <select name="years" id="year">
+                                    <option value="2024">2024</option>                                    
+                                    <option value="2023">2023</option>
+                                    
+                                    <% 
+                                        if(yearExistant!=null) {
+                                        for(int i=0; i< yearExistant.length ; i++) { %>
+                                        <option value="<%= yearExistant[i] %>"><%= yearExistant[i] %> </option>
+                                    <% } } %>
+                                </select>
+                                <input type="submit" value="Submit">
+                            </span>
+                        </form>
+
+                        <!-- **********************************************************************-->
                         <div class="Total">
-                            <h3>montant total des devis:</h3>
-                            <h1>
+                            <h3>Montant total des devis:</h3>
+                            <h1 style="text-align: right">
                                 <%= formatNumber.format(totalMontant[0].getSommemontant()) %>
                                  Ariary
                             </h1>
                         </div>
+                                 
+                        <div class="Total">
+                            <h3>Montant total des paiement effectués</h3>
+                            <h1 style="text-align: right">
+                                Ariary   
+                                <%= formatNumber.format(paiementTotal) %>
+                                 
+                            </h1>
+                        </div>
+                                
                     </div>
                     <div class="chartBatton">
                         <canvas id="barChart" width="400" height="400"></canvas>
@@ -163,6 +222,10 @@
                         </script>
                     </div>
                     <div class="chartCourbe">
+                        
+                     
+                        
+                        
                         <canvas id="lineChart" width="400" height="400"></canvas>
                         <script src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
                         <script>
@@ -190,9 +253,64 @@
                     </div>
                 </section>
                 <!-- ----------------------Code taloha------------------------- -->
+                
+                
             </div>
         </div>
     </section>
+    <style>
+
+        form {
+            width: 100%;
+            display: flex;
+            text-wrap: nowrap;
+            gap: 10px;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        label {
+           display: block;
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 100;
+            margin-bottom: -11px;
+        }
+
+        select {
+              width: 90%;
+            background: #ffffff14;
+            padding: 11px;
+            border: 1px solid #ccccccbf;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+            color: white;
+        }
+        option{
+            color:black;
+        }
+        input[type="submit"] {
+            background-color: #ffa73f1f;
+            color: #ffa73f;
+            border: 1px solid #ffa73f;
+            padding: 9px 27px;
+            border-radius: 4px;
+            width: 97%;
+            cursor: pointer;
+            font-size: 16px;
+            transition:0.4s ease-in-out;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffa73f;
+            color:white;
+        }
+    </style>
+                                   
     <script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </body>
 

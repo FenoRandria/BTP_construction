@@ -3,7 +3,7 @@
     Created on : May 2, 2024, 2:16:57 PM
     Author     : fenor
 --%>
-
+<%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +19,7 @@
 <body>
     <div id="page">
         <section class="save"">
-            <form id="loginForm" >
+            <form action="dashboard" method="POST" id="loginForm" >
                 <style>  
                      @keyframes error {
                             0% {
@@ -46,7 +46,7 @@
 
                 <!-- Mot de passe -->
                 <label for="motdepasse">Mot de passe :  <p id="errorMdp" style="color: red"></p></label>
-                <input type="password" id="motdepasse" name="mdp" value="admin">
+                <input type="password" id="motdepasse" name="mdp" value="123">
                 <br>
                 <!-- Bouton de soumission -->
                 <input type="submit" value="Soumettre">
@@ -61,36 +61,36 @@
 <script src="${pageContext.request.contextPath}/assets/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
-        $(document).ready(function() {
-        $('#loginForm').submit(function(event) {
-            event.preventDefault();
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    var messages = this.responseText.split("+");
-                    messages.forEach(function(message) {
-                        console.log(message);
-                        var parts = message.split(":");
-                        var type = parts[0];
-                        var content = parts[1];
-                        if (type === 'success') {
-                            console.log('success: ' + content);
-                            window.location.href = 'http://localhost:8084/BTP_construction'+content;
-                        } else {
-                            $("#" + type).text(content);
-                            console.error('Erreur: ' + content);
-                        }
-                    });
-                }
-            };
-            
-             let params = $('form').serialize().toString();
-            xmlhttp.open("POST", "admin-login", true);
-            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xmlhttp.send(params);
-        });
-    });
+//        $(document).ready(function() {
+//        $('#loginForm').submit(function(event) {
+//            event.preventDefault();
+//            var xmlhttp = new XMLHttpRequest();
+//            xmlhttp.onreadystatechange = function () {
+//                if (this.readyState == 4 && this.status == 200) {
+//                    console.log(this.responseText);
+//                    var messages = this.responseText.split("+");
+//                    messages.forEach(function(message) {
+//                        console.log(message);
+//                        var parts = message.split(":");
+//                        var type = parts[0];
+//                        var content = parts[1];
+//                        if (type === 'success') {
+//                            console.log('success: ' + content);
+//                            window.location.href = 'http://localhost:8084/BTP_construction'+content;
+//                        } else {
+//                            $("#" + type).text(content);
+//                            console.error('Erreur: ' + content);
+//                        }
+//                    });
+//                }
+//            };
+//            
+//             let params = $('form').serialize().toString();
+//            xmlhttp.open("POST", "admin-login", true);
+//            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//            xmlhttp.send(params);
+//        });
+//    });
                     
 </script>
 

@@ -18,15 +18,18 @@ public class TypeMaison {
     private String descriptions;
     private String photos;
     private double nbJourConstruction;
+    private double surface;
     private int corbeille;
     private Timestamp createdAt;
 
-    public TypeMaison(int id,String nom, String descriptions, String photos, double nbJourConstruction, int corbeille, Timestamp createdAt) throws Exception {
+    
+    public TypeMaison(int id, String nom, String descriptions, String photos, double nbJourConstruction, double surface, int corbeille, Timestamp createdAt) throws Exception {
         this.id = id;
-        this.setNom(nom);
+        this.nom = nom;
         this.descriptions = descriptions;
         this.photos = photos;
         this.setNbJourConstruction(nbJourConstruction);
+        this.surface = surface;
         this.corbeille = corbeille;
         this.createdAt = createdAt;
     }
@@ -72,6 +75,14 @@ public class TypeMaison {
 
     public void setPhotos(String photos) {
         this.photos = photos;
+    }
+
+    public double getSurface() {
+        return surface;
+    }
+
+    public void setSurface(double surface) {
+        this.surface = surface;
     }
 
     public double getNbJourConstruction() {

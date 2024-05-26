@@ -3,7 +3,7 @@
     Created on : May 2, 2024, 1:32:04 PM
     Author     : fenor
 --%>
-
+<%@page pageEncoding="UTF-8" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>

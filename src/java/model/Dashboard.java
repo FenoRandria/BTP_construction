@@ -111,6 +111,28 @@ public class Dashboard {
         }
         return dashboardData.toArray(new Dashboard[dashboardData.size()]);
     }
+    
+    public  Dashboard[] findmontantdevismoisFilterByYears(int years) {
+        ArrayList<Dashboard> dashboardData = new ArrayList<>();
+        String query = "select * from v_devismois where year = "+years;
+        try {
+            ConnectionDB co = new ConnectionDB();
+            Connection connection = co.getConnection("postgres");
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                dashboardData.add(new Dashboard(
+                        result.getInt("year"),
+                        result.getDouble("month"),
+                        result.getString("month_name"),
+                        result.getDouble("montanttotal")
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des données du tableau de bord : " + e.getMessage());
+        }
+        return dashboardData.toArray(new Dashboard[dashboardData.size()]);
+    }
 
 
     public  Dashboard[] findmontantdevisannee() {
@@ -144,6 +166,71 @@ public class Dashboard {
             while (result.next()) {
                 dashboardData.add(new Dashboard(
                         result.getDouble("sommemontant")
+                ));
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des données du tableau de bord : " + e.getMessage());
+        }
+        return dashboardData.toArray(new Dashboard[dashboardData.size()]);
+    }
+    
+
+    
+    
+//    ------------------- jour 2 *******************************************
+    public double getTotalMontantPaiement() {
+        String query = "select sum(montant) as totalPaiement from paiement";
+        double result = 0.0;
+        try {
+            ConnectionDB co = new ConnectionDB();
+            Connection connection = co.getConnection("postgres");
+            Statement statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(query);
+            if (res.next()) {
+                result = res.getDouble("totalPaiement");
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des données du tableau de bord : " + e.getMessage());
+        }
+        return result;
+    }
+    
+    public int[] getYearExistant() {
+        int[] years = null;
+        String query = "select DISTINCT year from v_devismois";
+        try {
+            ConnectionDB co = new ConnectionDB();
+            Connection connection = co.getConnection("postgres");
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            int i = 0;
+            if (result.next()) {
+                System.out.println("***************************"+result.getInt("year"));
+                years[i]= result.getInt("year");
+                i++;
+            }
+            return years;
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la récupération des données du tableau de bord : " + e.getMessage());
+        }
+        return null;
+    }
+    
+     public  Dashboard[] findmontantdevismoisParAnnee(int annee) {
+        ArrayList<Dashboard> dashboardData = new ArrayList<>();
+        String query = "select * from v_devismois where year = " + annee;
+        try {
+            ConnectionDB co = new ConnectionDB();
+            Connection connection = co.getConnection("postgres");
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+            while (result.next()) {
+                dashboardData.add(new Dashboard(
+                        result.getInt("year"),
+                        result.getDouble("month"),
+                        result.getString("month_name"),
+                        result.getDouble("montanttotal")
                 ));
             }
         } catch (Exception e) {

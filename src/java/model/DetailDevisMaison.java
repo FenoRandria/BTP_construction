@@ -9,11 +9,15 @@ package model;
  *
  * @author fenor
  */
+import connection.ConnectionDB;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.Timestamp;
 
 public class DetailDevisMaison {
     private int id;
-    private String descriptions;
+    private String descriptions;    
+    private String code;
     private double prixUnitaire;
     private double quantite;
     private String unite;
@@ -32,6 +36,31 @@ public class DetailDevisMaison {
         this.corbeille = corbeille;
         this.createdAt = createdAt;
     }
+    
+    public DetailDevisMaison(int id, String code, String descriptions, double prixUnitaire, double quantite, String unite, int idTypeMaison, int corbeille, Timestamp createdAt) throws Exception{
+        this.id = id;
+        this.setCode(code);
+        this.descriptions = descriptions;
+        this.setPrixUnitaire(prixUnitaire);
+        this.setQuantite(quantite);
+        this.unite = unite;
+        this.setIdTypeMaison(idTypeMaison);
+        this.corbeille = corbeille;
+        this.createdAt = createdAt;
+    }
+
+    public DetailDevisMaison(int id) {
+        this.id = id;
+    }
+
+    public DetailDevisMaison(int id, String descriptions, String code, double prixUnitaire, double quantite) {
+        this.id = id;
+        this.descriptions = descriptions;
+        this.code = code;
+        this.prixUnitaire = prixUnitaire;
+        this.quantite = quantite;
+    }
+    
 
     // Getters and Setters...
 
@@ -46,6 +75,15 @@ public class DetailDevisMaison {
     public DetailDevisMaison() {
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -112,5 +150,19 @@ public class DetailDevisMaison {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+    
+    public  void updateDetailsDevisMaison(String idDetailDevisMaison, String newDescriptions, String code, String newPrixUnitaire, String newQuantite) {
+        String query = "UPDATE detailDevisMaison SET descriptions = '" + newDescriptions + "', code = '"+code+"', prixUnitaire = " + newPrixUnitaire + ", quantite = " + newQuantite + " WHERE id = " + idDetailDevisMaison;
+        System.out.println(query);
+        try {
+            ConnectionDB co = new ConnectionDB();
+            Connection connection = co.getConnection("postgres");
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+            System.out.println("Mise à jour des détails du devis maison réussie");
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la mise à jour des détails du devis maison : " + e.getMessage());
+        }
     }
 }

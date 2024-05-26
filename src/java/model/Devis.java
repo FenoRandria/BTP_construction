@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 public class Devis {
     private int id;
     private int idUser;
+    private String reference;
     private String descriptions;
     private int idTypeFinition;
     private int idTypeMaison;
@@ -40,6 +41,23 @@ public class Devis {
         this.corbeille = corbeille;
         this.createdAt = createdAt;
     }
+    
+        public Devis(int id,String reference, int idUser, String descriptions, int idTypeFinition, int idTypeMaison, Date dateDebut, Date dateFin, double montant, double pourcentageFinition, int etatDevis, int corbeille, Timestamp createdAt)throws Exception {
+        this.id = id;
+        this.setReference(reference);
+        this.setIdUser(idUser);
+        this.setDescriptions(descriptions);
+        this.setIdTypeFinition(idTypeFinition);
+        this.setIdTypeMaison(idTypeMaison);
+        this.setDateDebut(dateDebut);
+        this.setDateFin(dateFin);
+        this.setMontant(montant);
+        this.setPourcentageFinition(pourcentageFinition);
+        this.etatDevis = etatDevis;
+        this.corbeille = corbeille;
+        this.createdAt = createdAt;
+    }
+
 
     public Devis(int id) throws Exception{
         if(id <= 0) throw new Exception("references devis invalid!");
@@ -52,6 +70,14 @@ public class Devis {
         this.setIdTypeFinition(idTypeFinition);
         this.setIdTypeMaison(idTypeMaison);
         this.setDateDebut(dateDebut);
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     public Devis() {

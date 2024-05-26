@@ -3,7 +3,7 @@
     Created on : May 13, 2024, 9:45:08 AM
     Author     : fenor
 --%>
-
+<%@page pageEncoding="UTF-8" %>
 <%@page import="model.Devis"%>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@page import="model.User"%>
@@ -155,6 +155,7 @@
 <script src="${pageContext.request.contextPath}/assets/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+
     function removeError()
     {
        var errors = document.getElementsByClassName("errors");
